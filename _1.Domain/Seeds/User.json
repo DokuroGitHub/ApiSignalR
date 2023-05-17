@@ -1,0 +1,47 @@
+[
+  {
+    "Id": 1,
+    "FirstName": "Võ",
+    "LastName": "Thành Đô",
+    "Email": "tamthoidetrong@gmail.com",
+    "Username": "tamthoidetrong@gmail.com",
+    "PasswordHash": "$2a$11$2PJMSufmjtIbktnDZ8nbHejByAc9I.wkVQx9u.uzlyye8NhEPMNl6",
+    "Money": 1999999999,
+    "Role": "admin",
+    "CreatedAt": "2021-05-30T15:00:00",
+    "CreatedBy": 1,
+    "UpdatedAt": "2022-05-30T15:00:00",
+    "UpdatedBy": 1,
+    "ManagerId": null
+  },
+  {
+    "Id": 2,
+    "FirstName": "Dokuro",
+    "LastName": "JP",
+    "Email": "dokuro.jp@gmail.com",
+    "Username": "dokuro.jp@gmail.com",
+    "PasswordHash": "$2a$11$2PJMSufmjtIbktnDZ8nbHejByAc9I.wkVQx9u.uzlyye8NhEPMNl6",
+    "Money": 69,
+    "Role": "user",
+    "CreatedAt": "2022-05-30T15:00:00",
+    "CreatedBy": 1,
+    "UpdatedAt": "2023-05-05T15:00:00",
+    "UpdatedBy": null,
+    "ManagerId": null
+  },
+  {
+    "Id": 3,
+    "FirstName": "dovt58",
+    "LastName": "GG",
+    "Email": "dovt58@gmail.com",
+    "Username": "dovt58@gmail.com",
+    "PasswordHash": "$2a$11$2PJMSufmjtIbktnDZ8nbHejByAc9I.wkVQx9u.uzlyye8NhEPMNl6",
+    "Money": 0,
+    "Role": "user",
+    "CreatedAt": "2023-05-05T15:00:00",
+    "CreatedBy": 1,
+    "UpdatedAt": "2023-05-06T15:00:00",
+    "UpdatedBy": 1,
+    "ManagerId": 2
+  }
+]
