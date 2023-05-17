@@ -165,7 +165,7 @@ public static class ConfigureServices
     public static WebApplication UseApiServices(this WebApplication app)
     {
         // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
+        if (app.Environment.IsDevelopment() || true)
         {
             // app.UseMigrationsEndPoint();
             app.UseSwagger();
