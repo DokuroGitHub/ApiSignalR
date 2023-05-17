@@ -18,7 +18,7 @@ public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<Applicati
 
         var appsettings = configuration.Get<Appsettings>() ?? new Appsettings();
 
-        var connectionString = appsettings.ConnectionStrings.DefaultConnectionV2;
+        var connectionString = appsettings.ConnectionStrings.DefaultConnection;
         Console.WriteLine(connectionString);
 
         var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();

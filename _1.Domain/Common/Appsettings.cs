@@ -11,7 +11,6 @@ public class Appsettings
 public class ConnectionStrings
 {
     public string DefaultConnection { get; init; }
-    public string DefaultConnectionV2 { get; init; }
 }
 
 public class Jwt
