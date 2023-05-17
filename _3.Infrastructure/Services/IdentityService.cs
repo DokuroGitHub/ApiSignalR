@@ -1,6 +1,7 @@
 ﻿using Application.Common.Models;
 using Application.Common.Interfaces;
 using Application.Services.IServices;
+using Domain.Common;
 
 namespace Infrastructure.Services;
 
@@ -10,16 +11,16 @@ public class IdentityService : IIdentityService
     private readonly List<Role> Roles = new(){
         new Role
         {
-            Name = "Admin",
+            Name = RoleNames.Admin,
             Policies = new List<string> {
-                "FullAccess",
+                PolicyNames.FullAccess,
             },
         },
         new Role
         {
-            Name = "User",
+            Name = RoleNames.User,
             Policies = new List<string> {
-                "CanViewAllUsers"
+                PolicyNames.CanViewAllUsers,
             },
         }
     };
@@ -46,7 +47,7 @@ public class IdentityService : IIdentityService
             return true; // super admin
         }
         var role = await _userService.GetNullableRoleByUserIdAsync(userId);
-        var isValid = Roles.Any(x => x.Name == role && x.Policies.Any(x => x == "FullAccess" || x == policyName));
+        var isValid = Roles.Any(x => x.Name == role && x.Policies.Any(x => x == PolicyNames.FullAccess || x == policyName));
         return isValid;
     }
 

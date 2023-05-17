@@ -1,13 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Application.MediatR.App.Queries.GetAppsettings;
+using Domain.Common;
 
 namespace Api.Controllers;
 
-// [Authorize]
+// [Authorize(Policy = PolicyNames.AdminOnly)]
 [ApiVersionNeutral]
 public class AppController : ApiControllerBase
 {
+    private readonly Appsettings _appsettings;
+
+    public AppController(Appsettings appsettings)
+    {
+        _appsettings = appsettings;
+    }
+
     [HttpGet("appsettings")]
-    public async Task<IActionResult> GetAppsettings()
-        => Ok(await Mediator.Send(new GetAppsettingsQuery()));
+    public IActionResult GetAppsettings()
+        => Ok(_appsettings);
 }
