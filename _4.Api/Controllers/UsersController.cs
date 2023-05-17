@@ -1,5 +1,4 @@
-﻿using Application.Common.Models;
-using Application.MediatR.Users.Commands.CreateUser;
+﻿using Application.MediatR.Users.Commands.CreateUser;
 using Application.MediatR.Users.Commands.DeleteUser;
 using Application.MediatR.Users.Commands.UpdateUser;
 using Application.MediatR.Users.Queries.GetUserByKey;
