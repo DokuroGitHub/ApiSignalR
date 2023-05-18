@@ -11,4 +11,5 @@ public class PolicyNames
     public const string FullAccess = "FullAccess";
     public const string AdminOnly = "AdminOnly";
     public const string CanViewAllUsers = "CanViewAllUsers";
+    public const string CanViewAllConversations = "CanViewAllConversations";
 }

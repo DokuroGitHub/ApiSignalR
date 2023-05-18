@@ -7,6 +7,14 @@ namespace Application.Common.Interfaces;
 public interface IUnitOfWork : IDisposable
 {
     #region repositories
+    public IConversationBlockRepository ConversationBlockRepository { get; }
+    public IConversationInvitationRepository ConversationInvitationRepository { get; }
+    public IConversationRepository ConversationRepository { get; }
+    public IDeletedMessageRepository DeletedMessageRepository { get; }
+    public IMessageAttachmentRepository MessageAttachmentRepository { get; }
+    public IMessageEmoteRepository MessageEmoteRepository { get; }
+    public IMessageRepository MessageRepository { get; }
+    public IParticipantRepository ParticipantRepository { get; }
     public ITodoListRepository TodoListRepository { get; }
     public ITodoItemRepository TodoItemRepository { get; }
     public IUserRepository UserRepository { get; }

@@ -15,23 +15,54 @@ public class UnitOfWork : IUnitOfWork
     //
     private readonly ApplicationDbContext _context;
     //
+    private readonly IConversationBlockRepository _conversationBlockRepository;
+    private readonly IConversationInvitationRepository _conversationInvitationRepository;
+    private readonly IConversationRepository _conversationRepository;
+    private readonly IDeletedMessageRepository _deletedMessageRepository;
+    private readonly IMessageAttachmentRepository _messageAttachmentRepository;
+    private readonly IMessageEmoteRepository _messageEmoteRepository;
+    private readonly IMessageRepository _messageRepository;
+    private readonly IParticipantRepository _participantRepository;
     private readonly ITodoListRepository _todoListRepository;
     private readonly ITodoItemRepository _todoItemRepository;
     private readonly IUserRepository _userRepository;
-
     // repositories
+    public IConversationBlockRepository ConversationBlockRepository => _conversationBlockRepository;
+    public IConversationInvitationRepository ConversationInvitationRepository => _conversationInvitationRepository;
+    public IConversationRepository ConversationRepository => _conversationRepository;
+    public IDeletedMessageRepository DeletedMessageRepository => _deletedMessageRepository;
+    public IMessageAttachmentRepository MessageAttachmentRepository => _messageAttachmentRepository;
+    public IMessageEmoteRepository MessageEmoteRepository => _messageEmoteRepository;
+    public IMessageRepository MessageRepository => _messageRepository;
+    public IParticipantRepository ParticipantRepository => _participantRepository;
     public ITodoListRepository TodoListRepository => _todoListRepository;
     public ITodoItemRepository TodoItemRepository => _todoItemRepository;
     public IUserRepository UserRepository => _userRepository;
     //
     public UnitOfWork(
         ApplicationDbContext dbContext,
+        IConversationBlockRepository conversationBlockRepository,
+        IConversationInvitationRepository conversationInvitationRepository,
+        IConversationRepository conversationRepository,
+        IDeletedMessageRepository deletedMessageRepository,
+        IMessageAttachmentRepository messageAttachmentRepository,
+        IMessageEmoteRepository messageEmoteRepository,
+        IMessageRepository messageRepository,
+        IParticipantRepository participantRepository,
         ITodoListRepository todoListRepository,
         ITodoItemRepository todoItemRepository,
         IUserRepository userRepository)
     {
         _context = dbContext;
         // repositories
+        _conversationBlockRepository = conversationBlockRepository;
+        _conversationInvitationRepository = conversationInvitationRepository;
+        _conversationRepository = conversationRepository;
+        _deletedMessageRepository = deletedMessageRepository;
+        _messageAttachmentRepository = messageAttachmentRepository;
+        _messageEmoteRepository = messageEmoteRepository;
+        _messageRepository = messageRepository;
+        _participantRepository = participantRepository;
         _todoListRepository = todoListRepository;
         _todoItemRepository = todoItemRepository;
         _userRepository = userRepository;

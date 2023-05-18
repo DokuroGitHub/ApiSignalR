@@ -1,10 +1,11 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.Security;
+using Domain.Common;
 using MediatR;
 
 namespace Application.MediatR.Users.Queries.GetUsers;
 
-[Authorize(Policy = "CanViewAllUsers")]
+[Authorize(Policy = PolicyNames.CanViewAllUsers)]
 public record GetUsersQuery : IRequest<IReadOnlyCollection<UserBriefDto>>;
 
 public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, IReadOnlyCollection<UserBriefDto>>
