@@ -1,0 +1,11 @@
+[
+  {
+    "Id": 1,
+    "Title": "Todo list 1",
+    "Colour": null,
+    "CreatedBy": 1,
+    "CreatedAt": "2019-12-10T00:00:00",
+    "UpdatedBy": 1,
+    "UpdatedAt": "2022-12-10T00:00:00"
+  }
+]

@@ -1,0 +1,41 @@
+[
+  {
+    "Id": 1,
+    "CreatedBy": 1,
+    "CreatedAt": "2021-05-30T15:01:01",
+    "UpdatedBy": 1,
+    "UpdatedAt": "2022-05-30T15:01:01",
+    "DeletedBy": 1,
+    "DeletedAt": "2023-04-30T15:01:01",
+    "Title": "Nhóm 1",
+    "Description": "Nhóm luyện ngục dotnet",
+    "PhotoUrl": "https://i.pinimg.com/736x/eb/b4/24/ebb4240e278b99f7ec49a5a51980e187.jpg",
+    "LastMessageId": null
+  },
+  {
+    "Id": 2,
+    "CreatedBy": 1,
+    "CreatedAt": "2021-05-30T15:01:01",
+    "UpdatedBy": 1,
+    "UpdatedAt": "2022-05-30T15:01:01",
+    "DeletedBy": null,
+    "DeletedAt": null,
+    "Title": "Nhóm 1.1",
+    "Description": "Nhóm luyện ngục dotnet v1.1",
+    "PhotoUrl": "https://wallpapers.com/images/hd/anime-profile-picture-jioug7q8n43yhlwn.jpg",
+    "LastMessageId": null
+  },
+  {
+    "Id": 3,
+    "CreatedBy": 1,
+    "CreatedAt": "2021-05-30T15:01:01",
+    "UpdatedBy": null,
+    "UpdatedAt": null,
+    "DeletedBy": null,
+    "DeletedAt": null,
+    "Title": "Nhóm 1.3",
+    "Description": "Nhóm luyện ngục dotnet v1.3",
+    "PhotoUrl": "https://aniyuki.com/wp-content/uploads/2022/03/aniyuki-anime-girl-avatar-51.jpg",
+    "LastMessageId": null
+  }
+]

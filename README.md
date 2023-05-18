@@ -92,5 +92,9 @@ git init
 git add .
 git commit -m "first commit"
 git push --set-upstream "https://gitlab.com/DokuroSignalR/ApiSignalR.git" master
+git push --set-upstream "https://github.com/DokuroGitHub/ApiSignalR.git" master
+
+git remote add gitlab https://gitlab.com/DokuroSignalR/ApiSignalR.git
+git remote add github https://github.com/DokuroGitHub/ApiSignalR.git
 
 ```

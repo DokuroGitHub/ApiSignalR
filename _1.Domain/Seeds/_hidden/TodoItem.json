@@ -1,0 +1,28 @@
+[
+  {
+    "Id": 1,
+    "ListId": 1,
+    "Title": "Todo list 1",
+    "Note": "Note 1",
+    "Priority": 1,
+    "Reminder": "2019-12-10T00:00:00",
+    "Done": true,
+    "CreatedBy": 1,
+    "CreatedAt": "2019-12-10T00:00:00",
+    "UpdatedBy": 1,
+    "UpdatedAt": "2022-12-10T00:00:00"
+  },
+  {
+    "Id": 2,
+    "ListId": 1,
+    "Title": "Todo list 2",
+    "Note": "Note 2",
+    "Priority": 1,
+    "Reminder": "2019-12-10T00:00:00",
+    "Done": false,
+    "CreatedBy": 1,
+    "CreatedAt": "2019-12-10T00:00:00",
+    "UpdatedBy": 1,
+    "UpdatedAt": "2022-12-10T00:00:00"
+  }
+]

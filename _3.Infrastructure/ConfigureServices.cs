@@ -26,8 +26,10 @@ public static class ConfigureServices
         }
         else
         {
+            var connectionString = appsettings.ConnectionStrings.DefaultConnection;
+            Console.WriteLine($"connectionString: {connectionString}");
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
-                appsettings.ConnectionStrings.DefaultConnection,
+                connectionString,
                 builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
         }
 

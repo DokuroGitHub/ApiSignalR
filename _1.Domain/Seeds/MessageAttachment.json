@@ -1,0 +1,16 @@
+[
+  {
+    "Id": 1,
+    "MessageId": 2,
+    "FileUrl": "https://i.pinimg.com/736x/eb/b4/24/ebb4240e278b99f7ec49a5a51980e187.jpg",
+    "ThumbUrl": "https://i.pinimg.com/736x/eb/b4/24/ebb4240e278b99f7ec49a5a51980e187.jpg",
+    "Type": "File"
+  },
+  {
+    "Id": 2,
+    "MessageId": 3,
+    "FileUrl": "https://i.pinimg.com/736x/eb/b4/24/ebb4240e278b99f7ec49a5a51980e187.jpg",
+    "ThumbUrl": "https://i.pinimg.com/736x/eb/b4/24/ebb4240e278b99f7ec49a5a51980e187.jpg",
+    "Type": "Image"
+  }
+]
