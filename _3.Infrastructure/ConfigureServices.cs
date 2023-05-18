@@ -34,6 +34,14 @@ public static class ConfigureServices
         }
 
         // repositories
+        services.AddScoped<IConversationBlockRepository, ConversationBlockRepository>();
+        services.AddScoped<IConversationInvitationRepository, ConversationInvitationRepository>();
+        services.AddScoped<IConversationRepository, ConversationRepository>();
+        services.AddScoped<IDeletedMessageRepository, DeletedMessageRepository>();
+        services.AddScoped<IMessageAttachmentRepository, MessageAttachmentRepository>();
+        services.AddScoped<IMessageEmoteRepository, MessageEmoteRepository>();
+        services.AddScoped<IMessageRepository, MessageRepository>();
+        services.AddScoped<IParticipantRepository, ParticipantRepository>();
         services.AddScoped<ITodoItemRepository, TodoItemRepository>();
         services.AddScoped<ITodoListRepository, TodoListRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
