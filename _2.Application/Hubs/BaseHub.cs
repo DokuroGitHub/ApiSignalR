@@ -17,7 +17,7 @@ public abstract class BaseHub : Hub
     public async Task JoinGroup(string groupName)
     {
         var addToGroupTask = Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-        var sendTask = Clients.Group(groupName).SendAsync("Send", $"{Context.ConnectionId} joined {groupName}");
+        var sendTask = Clients.Group(groupName).SendAsync("NewMember", $"{Context.ConnectionId} joined {groupName}");
         await Task.WhenAll(addToGroupTask, sendTask);
     }
 }

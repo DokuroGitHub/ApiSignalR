@@ -9,13 +9,14 @@ using MediatR;
 
 namespace Application.Hubs.Conversations;
 
-public class ConversationsHub : BaseHub // treat this as a Controller
+public class ConversationsHub : BaseHub
 {
     public ConversationsHub(ISender mediator) : base(mediator)
     {
     }
 
-    public Task<PagedList<MediatR.Conversations.Queries.GetPagedConversations.ConversationBriefDto>> GetPagedConversations(GetPagedConversationsQuery query)
+    public Task<PagedList<MediatR.Conversations.Queries.GetPagedConversations.ConversationBriefDto>> GetPagedConversations(
+        GetPagedConversationsQuery query)
     => Mediator.Send(query);
 
     public Task<IReadOnlyCollection<MediatR.Conversations.Queries.GetConversations.ConversationBriefDto>> GetAll()

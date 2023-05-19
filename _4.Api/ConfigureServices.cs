@@ -58,6 +58,8 @@ public static class ConfigureServices
         services.AddSingleton<Stopwatch>(); // for performance middleware
         services.AddSingleton<PerformanceMiddleware>();
         // add services
+        services.AddHttpClient<IAuthThirtPartyService, AuthThirtPartyService>();
+        services.AddScoped<IAuthThirtPartyService, AuthThirtPartyService>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         // add validations
         services.AddScoped<FluentValidationSchemaProcessor>(provider =>

@@ -1,4 +1,6 @@
-﻿namespace Application.Common.Models;
+﻿using Application.Common.Models;
+
+namespace Application.MediatR.Auth.Queries.LoginAdmin;
 
 #pragma warning disable 
 public class LoginResponse
