@@ -1,4 +1,5 @@
-﻿using Application.Common.Interfaces;
+﻿using System.Text.Json.Serialization;
+using Application.Common.Interfaces.AuthThirtParty;
 using MediatR;
 
 namespace Application.MediatR.Auth.Queries.RegisterThirtParty;
@@ -9,7 +10,19 @@ public record RegisterThirtPartyQuery : IRequest<RegisterResponse>
     public string Username { get; init; }
     public string Password { get; init; }
     public string? PasswordConfirm { get; init; }
-};
+    public string Email { get; init; }
+    public UserGender? Gender { get; init; } = UserGender.Male;
+    public string? Name { get; init; }
+    public string? Phone { get; init; }
+    public DateTime? DateOfBirth { get; init; } = DateTime.Now;
+}
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum UserGender
+{
+    Male = 0,
+    Female = 1
+}
 
 public class LoginQueryHandler : IRequestHandler<RegisterThirtPartyQuery, RegisterResponse>
 {

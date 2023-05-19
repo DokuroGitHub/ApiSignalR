@@ -1,22 +1,19 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.Common.Interfaces.AuthThirtParty;
 using MediatR;
 
 namespace Application.MediatR.Auth.Queries.LoginThirtParty;
 
-public record LoginThirtParty : IRequest<LoginResponse>
+public record LoginThirtPartyQuery : IRequest<LoginResponse>
 {
 #pragma warning disable
-    public string Username { get; init; }
+    public string Email { get; init; }
     public string Password { get; init; }
     public string? PasswordConfirm { get; init; }
 };
 
-public class LoginQueryHandler : IRequestHandler<LoginThirtParty, LoginResponse>
+public class LoginQueryHandler : IRequestHandler<LoginThirtPartyQuery, LoginResponse>
 {
     private readonly IAuthThirtPartyService _authThirtPartyService;
-
-    private string _baseUrl { get; set; }
-    private HttpClient _client { get; set; }
 
     public LoginQueryHandler(
         IAuthThirtPartyService authThirtPartyService)
@@ -24,10 +21,10 @@ public class LoginQueryHandler : IRequestHandler<LoginThirtParty, LoginResponse>
         _authThirtPartyService = authThirtPartyService;
     }
 
-    public Task<LoginResponse> Handle(LoginThirtParty request, CancellationToken cancellationToken)
+    public Task<LoginResponse> Handle(LoginThirtPartyQuery request, CancellationToken cancellationToken)
     => _authThirtPartyService.Login(new LoginRequest()
     {
-    Email = request.Username,
-    Password = request.Password,
+        Email = request.Email,
+        Password = request.Password,
     });
 }

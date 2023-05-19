@@ -14,6 +14,19 @@ public class CurrentUserService : ICurrentUserService
     }
 
     public int? UserId
-        => int.TryParse(_httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier), out int userId) ?
-            userId : null; // TODO: throw new UnauthorizedAccessException();
+    {
+        get
+        {
+            var authorization = _httpContextAccessor.HttpContext?.Request.Headers.Authorization;
+            var idString = _httpContextAccessor.HttpContext?.User?.FindFirstValue("ID");
+            var nameIdentifierString = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            Console.WriteLine($"authorization: {authorization}");
+            Console.WriteLine($"idString: {idString}");
+            Console.WriteLine($"nameIdentifierString: {nameIdentifierString}");
+            return int.TryParse(idString, out int id) ?
+                id : int.TryParse(nameIdentifierString, out int nameIdentifier) ?
+                nameIdentifier : null;
+        }
+    }
+
 }

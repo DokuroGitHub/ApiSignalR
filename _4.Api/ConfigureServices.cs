@@ -3,6 +3,7 @@ using System.Text;
 using Api.Middlewares;
 using Api.Services;
 using Application.Common.Interfaces;
+using Application.Common.Interfaces.AuthThirtParty;
 using Application.Hubs.Chart;
 using Application.Hubs.ConversationBlocks;
 using Application.Hubs.ConversationInvitations;

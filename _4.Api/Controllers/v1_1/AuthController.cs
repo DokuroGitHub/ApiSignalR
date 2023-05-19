@@ -1,4 +1,5 @@
-﻿using Application.MediatR.Auth.Queries.LoginAdmin;
+﻿using Application.MediatR.Auth.Queries.LoginThirtParty;
+using Application.MediatR.Auth.Queries.RegisterThirtParty;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1_1;
@@ -8,7 +9,10 @@ namespace Api.Controllers.v1_1;
 public class AuthController : ApiControllerBase
 {
     [HttpPost("[action]")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult> LoginAdmin(LoginAdminQuery query)
+    public async Task<ActionResult> LoginThirtParty(LoginThirtPartyQuery query)
+    => Ok(await Mediator.Send(query));
+
+    [HttpPost("[action]")]
+    public async Task<ActionResult> RegisterThirtParty(RegisterThirtPartyQuery query)
     => Ok(await Mediator.Send(query));
 }

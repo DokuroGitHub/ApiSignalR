@@ -1,4 +1,4 @@
-﻿namespace Application.MediatR.Auth.Queries.RegisterThirtParty;
+﻿namespace Application.Common.Interfaces.AuthThirtParty;
 
 #pragma warning disable
 public class RegisterResponse
