@@ -29,7 +29,6 @@ public partial class UserAfterUpdateEventHandler : INotificationHandler<UserAfte
         var users = await _unitOfWork.UserRepository.GetAllAsync<UserBriefDto>(cancellationToken: cancellationToken);
         var usersTask = _usersHub.Clients
             .Group("UsersChanged")
-            // .All
             .SendAsync($"Users_Id_{notification.Item.Id}_Updated", users, cancellationToken);
         var userTask = _usersHub.Clients
             .Group($"User_Id_{notification.Item.Id}")

@@ -5,7 +5,7 @@ namespace Domain.Enums;
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum AttachmentType
 {
+    File,
     Image,
     Video,
-    File,
 }

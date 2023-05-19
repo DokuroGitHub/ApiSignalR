@@ -241,6 +241,74 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
     }
 
     // tracked/untracked
+    public TEntity Single(
+        Expression<Func<TEntity, bool>>? where = null,
+        bool tracked = false)
+    {
+        var query = _dbSet.AsQueryable();
+
+        query = query.Filter(
+            where: where,
+            tracked: tracked);
+
+        var item = query.SingleOrDefault();
+        if (item is null)
+            throw new NotFoundException($"{typeof(TEntity)} not found");
+        Console.WriteLine($"{typeof(TEntity)} State: {_context.Entry(item).State}");
+        return item;
+    }
+
+    // untracked
+    public TResult Single<TResult>(
+        Expression<Func<TEntity, bool>>? where = null) where TResult : class
+    {
+        var query = _dbSet.AsQueryable();
+
+        query = query.Filter(
+            where: where);
+
+        var item = query.ProjectTo<TResult>(_mapper.ConfigurationProvider).SingleOrDefault();
+        if (item is null)
+            throw new NotFoundException($"{typeof(TEntity)} not found");
+        return item;
+    }
+
+    // tracked/untracked
+    public async Task<TEntity> SingleAsync(
+        Expression<Func<TEntity, bool>>? where = null,
+        CancellationToken cancellationToken = default,
+        bool tracked = false)
+    {
+        var query = _dbSet.AsQueryable();
+
+        query = query.Filter(
+            where: where,
+            tracked: tracked);
+
+        var item = await query.SingleOrDefaultAsync(cancellationToken);
+        if (item is null)
+            throw new NotFoundException($"{typeof(TEntity)} not found");
+        Console.WriteLine($"{typeof(TEntity)} State: {_context.Entry(item).State}");
+        return item;
+    }
+
+    // untracked
+    public async Task<TResult> SingleAsync<TResult>(
+        Expression<Func<TEntity, bool>>? where = null,
+        CancellationToken cancellationToken = default) where TResult : class
+    {
+        var query = _dbSet.AsQueryable();
+
+        query = query.Filter(
+            where: where);
+
+        var item = await query.ProjectTo<TResult>(_mapper.ConfigurationProvider).SingleOrDefaultAsync(cancellationToken);
+        if (item is null)
+            throw new NotFoundException($"{typeof(TEntity)} not found");
+        return item;
+    }
+
+    // tracked/untracked
     public async Task<TEntity?> SingleOrDefaultAsync(
         Expression<Func<TEntity, bool>>? where = null,
         CancellationToken cancellationToken = default,

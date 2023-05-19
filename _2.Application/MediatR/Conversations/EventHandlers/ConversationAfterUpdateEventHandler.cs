@@ -29,7 +29,6 @@ public partial class ConversationAfterUpdateEventHandler : INotificationHandler<
         var conversations = await _unitOfWork.ConversationRepository.GetAllAsync<ConversationBriefDto>(cancellationToken: cancellationToken);
         var conversationsTask = _conversationsHub.Clients
             .Group("ConversationsChanged")
-            // .All
             .SendAsync($"Conversations_Id_{notification.Item.Id}_Updated", conversations, cancellationToken);
         var conversationTask = _conversationsHub.Clients
             .Group($"Conversation_Id_{notification.Item.Id}")

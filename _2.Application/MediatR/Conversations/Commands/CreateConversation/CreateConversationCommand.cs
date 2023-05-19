@@ -8,48 +8,72 @@ using MediatR;
 
 namespace Application.MediatR.Conversations.Commands.CreateConversation;
 
+#pragma warning disable
 public record CreateConversationCommand : IRequest<int>, IMapFrom<Conversation>
 {
-#pragma warning disable
     public string? Title { get; init; }
     public string? Description { get; init; }
     public string? PhotoUrl { get; init; }
     // ref
-    public virtual ICollection<MessageBriefDto>? Messages { get; init; }
-    public virtual ICollection<ConversationInvitationBriefDto>? Invitations { get; init; }
-    public virtual ICollection<ParticipantBriefDto>? Participants { get; init; }
+    public ICollection<MessageBriefDto>? Messages { get; init; }
+    public ICollection<ConversationInvitationBriefDto>? Invitations { get; init; }
+    public ICollection<ParticipantBriefDto>? Participants { get; init; }
+    // map
+    public void Mapping(Profile profile)
+    {
+        profile.CreateMap<CreateConversationCommand, Conversation>();
+    }
 }
 
-public record MessageBriefDto
+public class MessageBriefDto : IMapFrom<Message>
 {
-#pragma warning disable
     public string? Content { get; init; }
     // ref
-    public virtual ICollection<MessageAttachmentBriefDto> Attachments { get; init; }
+    public ICollection<MessageAttachmentBriefDto> Attachments { get; init; }
+    // map
+    public void Mapping(Profile profile)
+    {
+        profile.CreateMap<MessageBriefDto, Message>();
+    }
 }
 
-public record MessageAttachmentBriefDto
+public class MessageAttachmentBriefDto : IMapFrom<MessageAttachment>
 {
-#pragma warning disable
-    public string? FileUrl { get; set; }
-    public string? ThumbUrl { get; set; }
-    public AttachmentType Type { get; set; }
+    public string? FileUrl { get; init; }
+    public string? ThumbUrl { get; init; }
+    public AttachmentType Type { get; init; }
     // ref
+    // map
+    public void Mapping(Profile profile)
+    {
+        profile.CreateMap<MessageAttachmentBriefDto, MessageAttachment>();
+    }
 }
 
-public record ConversationInvitationBriefDto
+public class ConversationInvitationBriefDto : IMapFrom<ConversationInvitation>
 {
-    public int UserId { get; set; }
-    public ConversationRole Role { get; set; }
+    public int UserId { get; init; }
+    public ConversationRole Role { get; init; }
     // ref
+    // map
+    public void Mapping(Profile profile)
+    {
+        profile.CreateMap<ConversationInvitationBriefDto, ConversationInvitation>();
+    }
 }
 
-public record ParticipantBriefDto
+public class ParticipantBriefDto : IMapFrom<Participant>
 {
-    public int UserId { get; set; }
-    public ConversationRole Role { get; set; }
+    public int UserId { get; init; }
+    public ConversationRole Role { get; init; }
     // ref
+    // map
+    public void Mapping(Profile profile)
+    {
+        profile.CreateMap<ParticipantBriefDto, Participant>();
+    }
 }
+#pragma warning restore
 
 public class CreateConversationCommandHandler : IRequestHandler<CreateConversationCommand, int>
 {

@@ -71,6 +71,22 @@ public interface IGenericRepository<TEntity> where TEntity : BaseEntity
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         CancellationToken cancellationToken = default) where TResult : class;
     ///?<summary> tracked/untracked </summary>
+    TEntity Single(
+        Expression<Func<TEntity, bool>>? where = null,
+        bool tracked = false);
+    ///!<summary> untracked </summary>
+    TResult Single<TResult>(
+        Expression<Func<TEntity, bool>>? where = null) where TResult : class;
+    ///?<summary> tracked/untracked </summary>
+    Task<TEntity> SingleAsync(
+        Expression<Func<TEntity, bool>>? where = null,
+        CancellationToken cancellationToken = default,
+        bool tracked = false);
+    ///!<summary> untracked </summary>
+    Task<TResult> SingleAsync<TResult>(
+        Expression<Func<TEntity, bool>>? where = null,
+        CancellationToken cancellationToken = default) where TResult : class;
+    ///?<summary> tracked/untracked </summary>
     Task<TEntity?> SingleOrDefaultAsync(
         Expression<Func<TEntity, bool>>? where = null,
         CancellationToken cancellationToken = default,

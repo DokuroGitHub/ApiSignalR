@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Application.Common.Interfaces;
+﻿using Application.Common.Interfaces;
 using MediatR;
 using Application.Common.Exceptions;
 using Domain.Entities;
