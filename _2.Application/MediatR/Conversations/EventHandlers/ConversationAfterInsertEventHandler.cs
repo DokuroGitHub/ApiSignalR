@@ -1,5 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using Application.Hubs.Conversations;
+using Application.MediatR.Conversations.Queries.GetPagedConversations;
 using Domain.Events;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;

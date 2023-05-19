@@ -11,11 +11,8 @@ public class ParticipantConfiguration : IEntityTypeConfiguration<Participant>
     {
         builder.ToTable("Participant");
         builder
-            .HasKey(x => x.Id)
-            .HasName("PK_Participant_Id");
-        builder
-            .Property(x => x.Id)
-            .ValueGeneratedOnAdd();
+            .HasKey(x => new { x.ConversationId, x.UserId })
+            .HasName("PK_Participant_ConversationId_UserId");
         builder
             .Property(x => x.CreatedAt)
             .HasDefaultValueSql("GETDATE()");

@@ -3,16 +3,18 @@ using Application.Common.Interfaces;
 using Application.Common.Mappings;
 using AutoMapper;
 using Domain.Entities;
+using Domain.Enums;
 using Domain.Events;
 using MediatR;
 
 namespace Application.MediatR.Messages.Commands.UpdateMessage;
 
+#pragma warning disable
 public record UpdateMessageCommand : IRequest, IMapFrom<Message>
 {
     public int Id { get; set; }
     public string? Content { get; init; }
-    public virtual ICollection<MessageAttachment> Attachments { get; set; }
+    public ICollection<UpdateMessageAttachmentDto>? Attachments { get; set; }
 
     public void Mapping(Profile profile)
     {
@@ -21,6 +23,20 @@ public record UpdateMessageCommand : IRequest, IMapFrom<Message>
             .ForMember(des => des.Content, opt => opt.Condition(src => src.Content != null));
     }
 }
+
+public class UpdateMessageAttachmentDto : IMapFrom<MessageAttachment>
+{
+    public string? FileUrl { get; init; }
+    public string? ThumbUrl { get; init; }
+    public AttachmentType Type { get; init; }
+    // ref
+    // map
+    public void Mapping(Profile profile)
+    {
+        profile.CreateMap<UpdateMessageAttachmentDto, MessageAttachment>();
+    }
+}
+#pragma warning restore
 
 public class UpdateMessageCommandHandler : IRequestHandler<UpdateMessageCommand>
 {

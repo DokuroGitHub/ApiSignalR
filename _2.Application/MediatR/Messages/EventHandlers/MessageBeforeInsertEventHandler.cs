@@ -22,7 +22,7 @@ public class MessageBeforeInsertEventHandler : INotificationHandler<MessageBefor
     {
         _logger.LogInformation("CleanArchitecture Domain Event: {DomainEvent}", notification.GetType().Name);
         // set default values for Message
-        var currentUserId = _currentUserService.UserId ?? 1;
+        var currentUserId = _currentUserService.UserId ?? 0;
         // notification.Item.CreatedAt = _dateTimeService.Now; // no need bc of default value
         notification.Item.CreatedBy = currentUserId;
         // set default values for Attachments

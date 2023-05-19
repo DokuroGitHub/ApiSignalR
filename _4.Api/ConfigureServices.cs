@@ -4,6 +4,14 @@ using Api.Middlewares;
 using Api.Services;
 using Application.Common.Interfaces;
 using Application.Hubs.Chart;
+using Application.Hubs.ConversationBlocks;
+using Application.Hubs.ConversationInvitations;
+using Application.Hubs.Conversations;
+using Application.Hubs.DeletedMessages;
+using Application.Hubs.MessageAttachments;
+using Application.Hubs.MessageEmotes;
+using Application.Hubs.Messages;
+using Application.Hubs.Participants;
 using Application.Hubs.Test;
 using Application.Hubs.Users;
 using Domain.Common;
@@ -188,9 +196,17 @@ public static class ConfigureServices
         app.UseAuthorization();
         app.MapControllers();
         // signalR
-        app.MapHub<ChartHub>("/chart");
-        app.MapHub<TestHub>("/test");
-        app.MapHub<UsersHub>("/users");
+        app.MapHub<ChartHub>("/Chart");
+        app.MapHub<ConversationBlocksHub>("/ConversationBlocks");
+        app.MapHub<ConversationInvitationsHub>("/ConversationInvitations");
+        app.MapHub<ConversationsHub>("/Conversations");
+        app.MapHub<DeletedMessagesHub>("/DeletedMessages");
+        app.MapHub<MessageAttachmentsHub>("/MessageAttachments");
+        app.MapHub<MessageEmotesHub>("/MessageEmotes");
+        app.MapHub<MessagesHub>("/Messages");
+        app.MapHub<ParticipantsHub>("/Participants");
+        app.MapHub<TestHub>("/Test");
+        app.MapHub<UsersHub>("/Users");
 
         return app;
     }

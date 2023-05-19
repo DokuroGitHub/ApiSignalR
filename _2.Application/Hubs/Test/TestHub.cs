@@ -10,6 +10,12 @@ public class TestHub : Hub<IHubClient>
         return Task.CompletedTask;
     }
 
+    public string Test2(string message)
+    {
+        Console.WriteLine($"Test: {message}");
+        return message;
+    }
+
     public Task BroadcastMessage(string message)
     => Clients.All.BroadcastMessage(message);
 }

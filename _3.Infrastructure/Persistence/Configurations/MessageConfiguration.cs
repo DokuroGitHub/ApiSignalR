@@ -48,18 +48,18 @@ public class MessageConfiguration : IEntityTypeConfiguration<Message>
             .WithOne(x => x.Message)
             .HasForeignKey(x => x.MessageId)
             .HasPrincipalKey(x => x.Id)
-            .OnDelete(DeleteBehavior.ClientCascade);
+            .OnDelete(DeleteBehavior.Cascade);
         builder
             .HasMany(x => x.Attachments)
             .WithOne(x => x.Message)
             .HasForeignKey(x => x.MessageId)
             .HasPrincipalKey(x => x.Id)
-            .OnDelete(DeleteBehavior.ClientCascade);
+            .OnDelete(DeleteBehavior.Cascade);
         builder
             .HasMany(x => x.Emotes)
             .WithOne(x => x.Message)
             .HasForeignKey(x => x.MessageId)
             .HasPrincipalKey(x => x.Id)
-            .OnDelete(DeleteBehavior.ClientCascade);
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

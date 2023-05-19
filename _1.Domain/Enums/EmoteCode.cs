@@ -5,10 +5,10 @@ namespace Domain.Enums;
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum EmoteCode
 {
-    Like,
-    Haha,
-    Love,
-    Wow,
-    Sad,
-    Angry,
+    Like = 0,
+    Haha = 1,
+    Love = 2,
+    Wow = 3,
+    Sad = 4,
+    Angry = 5
 }

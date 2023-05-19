@@ -169,7 +169,7 @@ namespace _3.Infrastructure.Migrations
                     b.Property<int>("Role")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(1);
+                        .HasDefaultValue(0);
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -190,7 +190,7 @@ namespace _3.Infrastructure.Migrations
                             CreatedAt = new DateTime(2021, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified),
                             CreatedBy = 1,
                             JudgedBy = 2,
-                            Role = 1,
+                            Role = 0,
                             UserId = 2
                         },
                         new
@@ -201,7 +201,7 @@ namespace _3.Infrastructure.Migrations
                             CreatedAt = new DateTime(2021, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified),
                             CreatedBy = 1,
                             JudgedBy = 2,
-                            Role = 1,
+                            Role = 0,
                             UserId = 2
                         },
                         new
@@ -212,7 +212,7 @@ namespace _3.Infrastructure.Migrations
                             CreatedBy = 1,
                             JudgedBy = 3,
                             RejectedAt = new DateTime(2022, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified),
-                            Role = 1,
+                            Role = 0,
                             UserId = 3
                         },
                         new
@@ -221,7 +221,7 @@ namespace _3.Infrastructure.Migrations
                             ConversationId = 2,
                             CreatedAt = new DateTime(2021, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified),
                             CreatedBy = 1,
-                            Role = 1,
+                            Role = 0,
                             UserId = 4
                         });
                 });
@@ -352,7 +352,7 @@ namespace _3.Infrastructure.Migrations
                     b.Property<int>("Type")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(2);
+                        .HasDefaultValue(0);
 
                     b.HasKey("Id")
                         .HasName("PK_MessageAttachment_Id");
@@ -368,7 +368,7 @@ namespace _3.Infrastructure.Migrations
                             FileUrl = "https://i.pinimg.com/736x/eb/b4/24/ebb4240e278b99f7ec49a5a51980e187.jpg",
                             MessageId = 2,
                             ThumbUrl = "https://i.pinimg.com/736x/eb/b4/24/ebb4240e278b99f7ec49a5a51980e187.jpg",
-                            Type = 2
+                            Type = 0
                         },
                         new
                         {
@@ -376,7 +376,7 @@ namespace _3.Infrastructure.Migrations
                             FileUrl = "https://i.pinimg.com/736x/eb/b4/24/ebb4240e278b99f7ec49a5a51980e187.jpg",
                             MessageId = 3,
                             ThumbUrl = "https://i.pinimg.com/736x/eb/b4/24/ebb4240e278b99f7ec49a5a51980e187.jpg",
-                            Type = 0
+                            Type = 1
                         });
                 });
 
@@ -469,7 +469,7 @@ namespace _3.Infrastructure.Migrations
                     b.Property<int>("Role")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(1);
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -494,7 +494,7 @@ namespace _3.Infrastructure.Migrations
                             ConversationId = 1,
                             CreatedAt = new DateTime(2021, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified),
                             CreatedBy = 1,
-                            Role = 0,
+                            Role = 1,
                             UserId = 1
                         },
                         new
@@ -504,7 +504,7 @@ namespace _3.Infrastructure.Migrations
                             CreatedAt = new DateTime(2021, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified),
                             CreatedBy = 1,
                             Nickname = "Admin hiền lành",
-                            Role = 0,
+                            Role = 1,
                             UserId = 1
                         },
                         new
@@ -514,7 +514,7 @@ namespace _3.Infrastructure.Migrations
                             CreatedAt = new DateTime(2021, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified),
                             CreatedBy = 1,
                             Nickname = "Member số 1",
-                            Role = 1,
+                            Role = 0,
                             UserId = 2
                         },
                         new
@@ -523,7 +523,7 @@ namespace _3.Infrastructure.Migrations
                             ConversationId = 2,
                             CreatedAt = new DateTime(2021, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified),
                             CreatedBy = 1,
-                            Role = 1,
+                            Role = 0,
                             UserId = 3
                         },
                         new
@@ -534,7 +534,7 @@ namespace _3.Infrastructure.Migrations
                             CreatedBy = 1,
                             DeletedAt = new DateTime(2023, 4, 30, 15, 1, 1, 0, DateTimeKind.Unspecified),
                             DeletedBy = 1,
-                            Role = 1,
+                            Role = 0,
                             UserId = 4
                         });
                 });
@@ -757,7 +757,7 @@ namespace _3.Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Conversation", "Conversation")
                         .WithMany("Blocks")
                         .HasForeignKey("ConversationId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_ConversationBlock_ConversationId");
 
@@ -769,7 +769,7 @@ namespace _3.Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Conversation", "Conversation")
                         .WithMany("Invitations")
                         .HasForeignKey("ConversationId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_ConversationInvitation_ConversationId");
 
@@ -781,7 +781,7 @@ namespace _3.Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Message", "Message")
                         .WithMany("DeletedMessages")
                         .HasForeignKey("MessageId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_DeletedMessage_MessageId");
 
@@ -793,7 +793,7 @@ namespace _3.Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Conversation", "Conversation")
                         .WithMany("Messages")
                         .HasForeignKey("ConversationId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_Message_ConversationId");
 
@@ -812,7 +812,7 @@ namespace _3.Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Message", "Message")
                         .WithMany("Attachments")
                         .HasForeignKey("MessageId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_MessageAttachment_MessageId");
 
@@ -824,7 +824,7 @@ namespace _3.Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Message", "Message")
                         .WithMany("Emotes")
                         .HasForeignKey("MessageId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_MessageEmote_MessageId");
 
@@ -836,7 +836,7 @@ namespace _3.Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Conversation", "Conversation")
                         .WithMany("Participants")
                         .HasForeignKey("ConversationId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_Participant_ConversationId");
 

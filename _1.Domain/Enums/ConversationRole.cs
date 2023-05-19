@@ -5,6 +5,6 @@ namespace Domain.Enums;
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum ConversationRole
 {
-    Member,
-    Admin,
+    Member = 0,
+    Admin = 1
 }

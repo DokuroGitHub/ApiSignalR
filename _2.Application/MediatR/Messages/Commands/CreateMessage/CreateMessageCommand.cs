@@ -15,7 +15,7 @@ public record CreateMessageCommand : IRequest<int>, IMapFrom<Message>
     public string? Content { get; init; }
     public int? ReplyTo { get; init; }
     // ref
-    public ICollection<MessageAttachmentBriefDto>? Attachments { get; init; }
+    public ICollection<CreateMessageAttachmentDto>? Attachments { get; init; }
     // map
     public void Mapping(Profile profile)
     {
@@ -23,7 +23,7 @@ public record CreateMessageCommand : IRequest<int>, IMapFrom<Message>
     }
 }
 
-public class MessageAttachmentBriefDto : IMapFrom<MessageAttachment>
+public class CreateMessageAttachmentDto : IMapFrom<MessageAttachment>
 {
     public string? FileUrl { get; init; }
     public string? ThumbUrl { get; init; }
@@ -32,7 +32,7 @@ public class MessageAttachmentBriefDto : IMapFrom<MessageAttachment>
     // map
     public void Mapping(Profile profile)
     {
-        profile.CreateMap<MessageAttachmentBriefDto, MessageAttachment>();
+        profile.CreateMap<CreateMessageAttachmentDto, MessageAttachment>();
     }
 }
 #pragma warning restore

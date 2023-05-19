@@ -30,24 +30,24 @@ public class ConversationConfiguration : IEntityTypeConfiguration<Conversation>
             .WithOne(x => x.Conversation)
             .HasForeignKey(x => x.ConversationId)
             .HasPrincipalKey(x => x.Id)
-            .OnDelete(DeleteBehavior.ClientCascade);
+            .OnDelete(DeleteBehavior.Cascade);
         builder
             .HasMany(x => x.Invitations)
             .WithOne(x => x.Conversation)
             .HasForeignKey(x => x.ConversationId)
             .HasPrincipalKey(x => x.Id)
-            .OnDelete(DeleteBehavior.ClientCascade);
+            .OnDelete(DeleteBehavior.Cascade);
         builder
             .HasMany(x => x.Blocks)
             .WithOne(x => x.Conversation)
             .HasForeignKey(x => x.ConversationId)
             .HasPrincipalKey(x => x.Id)
-            .OnDelete(DeleteBehavior.ClientCascade);
+            .OnDelete(DeleteBehavior.Cascade);
         builder
             .HasMany(x => x.Participants)
             .WithOne(x => x.Conversation)
             .HasForeignKey(x => x.ConversationId)
             .HasPrincipalKey(x => x.Id)
-            .OnDelete(DeleteBehavior.ClientCascade);
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

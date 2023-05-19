@@ -27,9 +27,9 @@ public class ConversationBeforeUpdateOfLastMessageIdEventHandler : INotification
     public async Task Handle(ConversationBeforeUpdateOfLastMessageIdEvent notification, CancellationToken cancellationToken)
     {
         _logger.LogInformation("CleanArchitecture Domain Event: {DomainEvent}", notification.GetType().Name);
-        var conversationTask = Task.Run(async () =>
+        var conversationTask = Task.Run(() =>
         {
-
+            return Task.CompletedTask;
         });
         await Task.WhenAll(conversationTask);
     }

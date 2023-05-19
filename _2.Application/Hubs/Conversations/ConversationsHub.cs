@@ -1,36 +1,42 @@
-﻿using Application.MediatR.Conversations.Commands.CreateConversation;
+﻿using Application.Common.Models;
+using Application.MediatR.Conversations.Commands.CreateConversation;
 using Application.MediatR.Conversations.Commands.DeleteConversation;
 using Application.MediatR.Conversations.Commands.UpdateConversation;
+using Application.MediatR.Conversations.Queries.GetConversationByKey;
+using Application.MediatR.Conversations.Queries.GetConversations;
+using Application.MediatR.Conversations.Queries.GetPagedConversations;
 using MediatR;
-using Microsoft.AspNetCore.SignalR;
 
 namespace Application.Hubs.Conversations;
 
-public class ConversationsHub : Hub // treat this as a Controller
+public class ConversationsHub : BaseHub // treat this as a Controller
 {
-    private ISender _mediator;
-
-    public ConversationsHub(ISender mediator)
+    public ConversationsHub(ISender mediator) : base(mediator)
     {
-        _mediator = mediator;
     }
 
-    public async Task JoinGroup(string groupName)
-    {
-        var addToGroupTask = Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-        var sendTask = Clients.Group(groupName).SendAsync("Send", $"{Context.ConnectionId} joined {groupName}");
-        await Task.WhenAll(addToGroupTask, sendTask);
-    }
+    public Task<PagedList<MediatR.Conversations.Queries.GetPagedConversations.ConversationBriefDto>> GetPagedConversations(GetPagedConversationsQuery query)
+    => Mediator.Send(query);
 
-    public Task Create(CreateConversationCommand command)
-    => _mediator.Send(command);
+    public Task<IReadOnlyCollection<MediatR.Conversations.Queries.GetConversations.ConversationBriefDto>> GetAll()
+    => Mediator.Send(new GetConversationsQuery());
 
-    public async Task Update(int id, UpdateConversationCommand command)
+    public Task<MediatR.Conversations.Queries.GetConversationByKey.ConversationBriefDto> GetByKey(int id)
+    => Mediator.Send(new GetConversationByKeyQuery() { Id = id });
+
+    public Task<int> Create(CreateConversationCommand command)
+    => Mediator.Send(command);
+
+    public async Task<int> Update(int id, UpdateConversationCommand command)
     {
         command.Id = id;
-        await _mediator.Send(command);
+        await Mediator.Send(command);
+        return id;
     }
 
-    public Task Delete(int id)
-    => _mediator.Send(new DeleteConversationCommand(id));
+    public async Task<int> Delete(int id)
+    {
+        await Mediator.Send(new DeleteConversationCommand(id));
+        return id;
+    }
 }
