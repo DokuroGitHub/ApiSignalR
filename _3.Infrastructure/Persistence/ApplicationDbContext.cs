@@ -14,12 +14,12 @@ public class ApplicationDbContext : DbContext
 
     #region migrations => for EF Core CLI migrations: ApplicationDbContextFactory.CreateDbContext + OnModelCreating
 #pragma warning disable
-    public ApplicationDbContext(DbContextOptions options) : base(options) { }
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 #pragma warning restore
     #endregion migrations
 
     public ApplicationDbContext(
-        DbContextOptions options,
+        DbContextOptions<ApplicationDbContext> options,
         IMediator mediator,
         AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor)
         : base(options)

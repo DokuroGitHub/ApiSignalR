@@ -13,10 +13,10 @@ public record LoginThirtPartyQuery : IRequest<LoginResponse>
 
 public class LoginQueryHandler : IRequestHandler<LoginThirtPartyQuery, LoginResponse>
 {
-    private readonly IAuthThirtPartyService _authThirtPartyService;
+    private readonly IAuthThirdPartyService _authThirtPartyService;
 
     public LoginQueryHandler(
-        IAuthThirtPartyService authThirtPartyService)
+        IAuthThirdPartyService authThirtPartyService)
     {
         _authThirtPartyService = authThirtPartyService;
     }

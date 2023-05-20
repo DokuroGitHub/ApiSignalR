@@ -22,15 +22,22 @@ public static class ConfigureServices
         if (appsettings.UseInMemoryDatabase)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseInMemoryDatabase("CleanArchitectureDb"));
+            {
+                options.UseInMemoryDatabase("CleanArchitectureDb");
+                options.EnableSensitiveDataLogging();
+            });
         }
         else
         {
             var connectionString = appsettings.ConnectionStrings.DefaultConnection;
             Console.WriteLine($"connectionString: {connectionString}");
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
-                connectionString,
-                builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(
+                    connectionString,
+                    builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName));
+                options.EnableSensitiveDataLogging();
+            });
         }
 
         // repositories

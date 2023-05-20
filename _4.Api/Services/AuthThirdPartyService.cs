@@ -4,29 +4,31 @@ using Newtonsoft.Json;
 
 namespace Api.Services;
 
-public class AuthThirtPartyService : IAuthThirtPartyService
+public class AuthThirdPartyService : IAuthThirdPartyService
 {
     private string _baseUrl { get; set; }
     private HttpClient _client { get; set; }
 
-    public AuthThirtPartyService(
+    public AuthThirdPartyService(
         IHttpClientFactory httpClientFactory
     )
     {
         _client = httpClientFactory.CreateClient();
-        _baseUrl = "http://www.srstrainingmanagementsystem.somee.com/api/Account";
+        _baseUrl = "https://trainingmanagementsystem.azurewebsites.net/api/Account";
     }
 
     public async Task<LoginResponse> Login(LoginRequest dto)
     {
         var stringContent = new StringContent(
-            JsonConvert.SerializeObject(dto, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore }),
+            JsonConvert.SerializeObject(
+                dto, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore }),
             Encoding.UTF8, "application/json");
         var response = await _client.PostAsync($"{_baseUrl}/login", stringContent);
         if (!response.IsSuccessStatusCode)
             throw new UnauthorizedAccessException("Login failed");
         var content = await response.Content.ReadAsStringAsync();
-        var result = JsonConvert.DeserializeObject<LoginResponse>(content);
+        var result = JsonConvert.DeserializeObject<LoginResponse>(
+            content, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
         if (result == null)
             throw new UnauthorizedAccessException("Login failed");
         return result;

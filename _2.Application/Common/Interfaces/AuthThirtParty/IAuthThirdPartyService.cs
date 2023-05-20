@@ -1,6 +1,6 @@
 ﻿namespace Application.Common.Interfaces.AuthThirtParty;
 
-public interface IAuthThirtPartyService
+public interface IAuthThirdPartyService
 {
     Task<LoginResponse> Login(LoginRequest dto);
     Task<RegisterResponse> Register(RegisterRequest dto);

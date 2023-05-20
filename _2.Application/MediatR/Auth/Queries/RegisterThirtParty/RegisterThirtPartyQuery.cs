@@ -26,13 +26,13 @@ public enum UserGender
 
 public class LoginQueryHandler : IRequestHandler<RegisterThirtPartyQuery, RegisterResponse>
 {
-    private readonly IAuthThirtPartyService _authThirtPartyService;
+    private readonly IAuthThirdPartyService _authThirtPartyService;
 
     private string _baseUrl { get; set; }
     private HttpClient _client { get; set; }
 
     public LoginQueryHandler(
-        IAuthThirtPartyService authThirtPartyService)
+        IAuthThirdPartyService authThirtPartyService)
     {
         _authThirtPartyService = authThirtPartyService;
     }

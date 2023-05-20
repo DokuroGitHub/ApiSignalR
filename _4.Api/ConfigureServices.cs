@@ -1,9 +1,12 @@
 ﻿using System.Diagnostics;
+using System.ServiceProcess;
 using System.Text;
+using Api.Health;
 using Api.Middlewares;
 using Api.Services;
 using Application.Common.Interfaces;
 using Application.Common.Interfaces.AuthThirtParty;
+using Application.Health;
 using Application.Hubs.Chart;
 using Application.Hubs.ConversationBlocks;
 using Application.Hubs.ConversationInvitations;
@@ -15,9 +18,15 @@ using Application.Hubs.Messages;
 using Application.Hubs.Participants;
 using Application.Hubs.Test;
 using Application.Hubs.Users;
+using Application.Services.IServices;
 using Domain.Common;
+using HealthChecks.UI.Client;
+using Infrastructure.Health;
+using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ZymLabs.NSwag.FluentValidation;
@@ -59,8 +68,10 @@ public static class ConfigureServices
         services.AddSingleton<Stopwatch>(); // for performance middleware
         services.AddSingleton<PerformanceMiddleware>();
         // add services
-        services.AddHttpClient<IAuthThirtPartyService, AuthThirtPartyService>();
-        services.AddScoped<IAuthThirtPartyService, AuthThirtPartyService>();
+        services.AddHttpClient<IAuthThirdPartyHealthService, AuthThirdPartyHealthService>();
+        services.AddSingleton<IAuthThirdPartyHealthService, AuthThirdPartyHealthService>();
+        services.AddHttpClient<IAuthThirdPartyService, AuthThirdPartyService>();
+        services.AddScoped<IAuthThirdPartyService, AuthThirdPartyService>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
         // add validations
         services.AddScoped<FluentValidationSchemaProcessor>(provider =>
@@ -113,7 +124,44 @@ public static class ConfigureServices
 
         // additionals
         services.AddHttpContextAccessor();
-        services.AddHealthChecks();
+
+        services.AddHealthChecks()
+            .AddCheck<MyHealthyHealthCheck>(
+                name: nameof(MyHealthyHealthCheck),
+                tags: new[] { "healthy-for-sure" })
+            .AddCheck<AuthThirdPartyHealthCheck>(
+                name: nameof(AuthThirdPartyHealthCheck),
+                tags: new[] { "third-party", "login", "register" })
+            .AddCheck(
+                name: nameof(SqlConnectionHealthCheck),
+                instance: new SqlConnectionHealthCheck(appsettings.ConnectionStrings.DefaultConnection),
+                tags: new string[] { "dokurodb", "sql" })
+            .AddSqlServer(
+                connectionString: appsettings.ConnectionStrings.DefaultConnection,
+                name: "CK_DefaultConnection",
+                tags: new[] { "DefaultConnection" })
+            .AddCheck<ApiHealthCheck>(
+                name: nameof(ApiHealthCheck),
+                tags: new string[] { "api", "http" })
+            .AddDbContextCheck<ApplicationDbContext>(tags: new[] { "CK_ApplicationDbContext" })
+            .AddDiskStorageHealthCheck(s => s.AddDrive("C:\\", 1024), tags: new[] { "C_Drive" })
+            .AddProcessAllocatedMemoryHealthCheck(512, tags: new[] { "CK_ProcessAllocatedMemory" })
+            .AddProcessHealthCheck("_4.Api", p => p.Length > 0, tags: new[] { "_4.Api" })
+            .AddVirtualMemorySizeHealthCheck(long.MaxValue, tags: new[] { "VirtualMemorySize" })
+            // .AddWindowsServiceHealthCheck("Power", s => s.Status == ServiceControllerStatus.Running, tags: new[] { "Power" })
+            .AddUrlGroup(new Uri("https://9gag.com"), tags: new[] { "9gag" })
+            .AddSignalRHub(appsettings.SignalR.HubUrl, tags: new[] { "SignalRHub" })
+            .AddPingHealthCheck(s => s.AddHost("9gag.com", 9), tags: new[] { "ping-9gag" })
+            .AddWorkingSetHealthCheck(long.MaxValue, tags: new[] { "WorkingSet" });
+        services.AddHealthChecksUI(options =>
+        {
+            options.AddHealthCheckEndpoint("Health Check API", "/hc");
+            options.SetEvaluationTimeInSeconds(69);
+            options.SetApiMaxActiveRequests(2);
+            options.DisableDatabaseMigrations();
+        })  //.AddSqliteStorage("Data Source=healthchecks.db");
+            //.AddSqlServerStorage(appsettings.ConnectionStrings.DefaultConnectionV2);
+            .AddInMemoryStorage();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(options =>
         {
@@ -193,7 +241,19 @@ public static class ConfigureServices
         }
         app.UseExceptionMiddleware();
         app.UsePerformanceMiddleware();
-        app.UseHealthChecks("/health");
+        // app.UseHealthChecks("/health");
+        app.MapHealthChecks("/hc", new HealthCheckOptions()
+        {
+            Predicate = _ => true,
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+            ResultStatusCodes =
+            {
+                [HealthStatus.Healthy] = StatusCodes.Status200OK,
+                [HealthStatus.Degraded] = StatusCodes.Status200OK,
+                [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
+            }
+        });
+        app.MapHealthChecksUI(options => options.UIPath = "/hc-ui");
         app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseAuthorization();

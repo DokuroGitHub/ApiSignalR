@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Application.Common.Behaviours;
+using Application.Services;
 using Application.Services.IServices;
 using Application.Services.Users;
 using FluentValidation;
@@ -24,6 +25,7 @@ public static class ConfigureServices
 
         // add services
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IMyHealthyHealthService, MyHealthyHealthService>();
 
         return services;
     }
