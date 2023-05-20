@@ -8,6 +8,7 @@ using Application.Common.Interfaces;
 using Application.Common.Interfaces.AuthThirtParty;
 using Application.Health;
 using Application.Hubs.Chart;
+using Application.Hubs.Chat;
 using Application.Hubs.ConversationBlocks;
 using Application.Hubs.ConversationInvitations;
 using Application.Hubs.Conversations;
@@ -260,6 +261,7 @@ public static class ConfigureServices
         app.MapControllers();
         // signalR
         app.MapHub<ChartHub>("/Chart");
+        app.MapHub<ChatHub>("/ChatHub");
         app.MapHub<ConversationBlocksHub>("/ConversationBlocks");
         app.MapHub<ConversationInvitationsHub>("/ConversationInvitations");
         app.MapHub<ConversationsHub>("/Conversations");
