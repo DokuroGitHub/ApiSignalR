@@ -2,6 +2,7 @@
 using Application.Common.Behaviours;
 using Application.Services;
 using Application.Services.IServices;
+using Application.Services.SampleUsers;
 using Application.Services.Users;
 using FluentValidation;
 using MediatR;
@@ -24,6 +25,7 @@ public static class ConfigureServices
         });
 
         // add services
+        services.AddScoped<ISampleUserService, SampleUserService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IMyHealthyHealthService, MyHealthyHealthService>();
 

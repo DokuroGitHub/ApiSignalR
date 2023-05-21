@@ -1,6 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using Application.Hubs.Users;
-using Domain.Events;
+using Domain.Events.Users;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;

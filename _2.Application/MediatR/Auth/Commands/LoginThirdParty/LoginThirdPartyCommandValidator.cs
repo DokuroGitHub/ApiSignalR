@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace Application.MediatR.Auth.Queries.LoginThirtParty;
+namespace Application.MediatR.Auth.Commands.LoginThirdParty;
 
-public class LoginThirtPartyQueryValidator : AbstractValidator<LoginThirtPartyQuery>
+public class LoginThirdPartyCommandValidator : AbstractValidator<LoginThirdPartyCommand>
 {
-    public LoginThirtPartyQueryValidator()
+    public LoginThirdPartyCommandValidator()
     {
         RuleFor(x => x.Email)
             .NotEmpty().WithMessage("Email is required.")

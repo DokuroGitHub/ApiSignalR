@@ -23,6 +23,7 @@ public class UnitOfWork : IUnitOfWork
     private readonly IMessageEmoteRepository _messageEmoteRepository;
     private readonly IMessageRepository _messageRepository;
     private readonly IParticipantRepository _participantRepository;
+    private readonly ISampleUserRepository _sampleUserRepository;
     private readonly ITodoListRepository _todoListRepository;
     private readonly ITodoItemRepository _todoItemRepository;
     private readonly IUserRepository _userRepository;
@@ -35,6 +36,7 @@ public class UnitOfWork : IUnitOfWork
     public IMessageEmoteRepository MessageEmoteRepository => _messageEmoteRepository;
     public IMessageRepository MessageRepository => _messageRepository;
     public IParticipantRepository ParticipantRepository => _participantRepository;
+    public ISampleUserRepository SampleUserRepository => _sampleUserRepository;
     public ITodoListRepository TodoListRepository => _todoListRepository;
     public ITodoItemRepository TodoItemRepository => _todoItemRepository;
     public IUserRepository UserRepository => _userRepository;
@@ -49,6 +51,7 @@ public class UnitOfWork : IUnitOfWork
         IMessageEmoteRepository messageEmoteRepository,
         IMessageRepository messageRepository,
         IParticipantRepository participantRepository,
+        ISampleUserRepository sampleUserRepository,
         ITodoListRepository todoListRepository,
         ITodoItemRepository todoItemRepository,
         IUserRepository userRepository)
@@ -63,6 +66,7 @@ public class UnitOfWork : IUnitOfWork
         _messageEmoteRepository = messageEmoteRepository;
         _messageRepository = messageRepository;
         _participantRepository = participantRepository;
+        _sampleUserRepository = sampleUserRepository;
         _todoListRepository = todoListRepository;
         _todoItemRepository = todoItemRepository;
         _userRepository = userRepository;

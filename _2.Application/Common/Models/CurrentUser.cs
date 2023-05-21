@@ -1,4 +1,6 @@
-﻿namespace Application.Common.Models;
+﻿using Domain.Enums;
+
+namespace Application.Common.Models;
 
 public class CurrentUser
 {
@@ -6,5 +8,5 @@ public class CurrentUser
     public int UserId { get; init; }
     public string DisplayName { get; init; }
     public string? Email { get; init; }
-    public string Role { get; init; }
+    public UserRole Role { get; init; }
 }

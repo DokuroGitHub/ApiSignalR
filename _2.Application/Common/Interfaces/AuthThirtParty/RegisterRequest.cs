@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Application.Common.Interfaces.AuthThirtParty;
+namespace Application.Common.Interfaces.AuthThirdParty;
 
 #pragma warning disable
 public class RegisterRequest

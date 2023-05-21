@@ -5,7 +5,7 @@ using Api.Health;
 using Api.Middlewares;
 using Api.Services;
 using Application.Common.Interfaces;
-using Application.Common.Interfaces.AuthThirtParty;
+using Application.Common.Interfaces.AuthThirdParty;
 using Application.Health;
 using Application.Hubs.Chart;
 using Application.Hubs.Chat;

@@ -19,7 +19,8 @@ public class MessageAttachmentConfiguration : IEntityTypeConfiguration<MessageAt
         builder
             .Property(x => x.Type)
             .HasDefaultValue(AttachmentType.File);
-        // ref
+        //* ref
+        // Message
         builder
             .HasOne(x => x.Message)
             .WithMany(x => x.Attachments)

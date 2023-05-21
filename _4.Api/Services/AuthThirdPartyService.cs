@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using Application.Common.Interfaces.AuthThirtParty;
+using Application.Common.Interfaces.AuthThirdParty;
 using Newtonsoft.Json;
 
 namespace Api.Services;

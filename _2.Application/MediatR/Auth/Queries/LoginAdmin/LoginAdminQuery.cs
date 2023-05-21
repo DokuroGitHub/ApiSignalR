@@ -1,7 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using MediatR;
 using Application.Common.Exceptions;
-using Domain.Common;
 using Application.Common.Models;
 using FluentValidation.Results;
 using Domain.Enums;
@@ -42,7 +41,7 @@ public class LoginAdminQueryHandler : IRequestHandler<LoginAdminQuery, LoginResp
             UserId = int.MaxValue,
             DisplayName = "admin",
             Email = "admin@gmail.com",
-            Role = UserRole.Admin.ToStringValue(),
+            Role = UserRole.Admin,
         };
         var token = _jwtService.GenerateJWT(currentUser);
 

@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 
-namespace Application.MediatR.Auth.Queries.RegisterThirtParty;
+namespace Application.MediatR.Auth.Queries.RegisterThirdParty;
 
-public class LoginThirtPartyQueryValidator : AbstractValidator<RegisterThirtPartyQuery>
+public class LoginThirtPartyQueryValidator : AbstractValidator<RegisterThirdPartyQuery>
 {
     public LoginThirtPartyQueryValidator()
     {

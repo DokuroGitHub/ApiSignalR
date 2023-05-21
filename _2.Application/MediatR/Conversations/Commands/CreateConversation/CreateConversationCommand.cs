@@ -14,7 +14,7 @@ public record CreateConversationCommand : IRequest<int>, IMapFrom<Conversation>
     public string? Title { get; init; }
     public string? Description { get; init; }
     public string? PhotoUrl { get; init; }
-    // ref
+    //* ref
     public ICollection<MessageBriefDto>? Messages { get; init; }
     public ICollection<ConversationInvitationBriefDto>? Invitations { get; init; }
     public ICollection<ParticipantBriefDto>? Participants { get; init; }
@@ -28,7 +28,7 @@ public record CreateConversationCommand : IRequest<int>, IMapFrom<Conversation>
 public class MessageBriefDto : IMapFrom<Message>
 {
     public string? Content { get; init; }
-    // ref
+    //* ref
     public ICollection<MessageAttachmentBriefDto> Attachments { get; init; }
     // map
     public void Mapping(Profile profile)
@@ -42,7 +42,7 @@ public class MessageAttachmentBriefDto : IMapFrom<MessageAttachment>
     public string? FileUrl { get; init; }
     public string? ThumbUrl { get; init; }
     public AttachmentType Type { get; init; }
-    // ref
+    //* ref
     // map
     public void Mapping(Profile profile)
     {
@@ -54,7 +54,7 @@ public class ConversationInvitationBriefDto : IMapFrom<ConversationInvitation>
 {
     public int UserId { get; init; }
     public ConversationRole Role { get; init; }
-    // ref
+    //* ref
     // map
     public void Mapping(Profile profile)
     {
@@ -66,7 +66,7 @@ public class ParticipantBriefDto : IMapFrom<Participant>
 {
     public int UserId { get; init; }
     public ConversationRole Role { get; init; }
-    // ref
+    //* ref
     // map
     public void Mapping(Profile profile)
     {

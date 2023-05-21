@@ -1,6 +1,6 @@
 ﻿using Application.Common.Interfaces;
+using Application.MediatR.Auth.Commands.LoginAnonymous;
 using Application.MediatR.Auth.Commands.Register;
-using Application.MediatR.Auth.Queries.GetCurrentUserId;
 using Application.MediatR.Auth.Queries.Login;
 using Application.MediatR.Auth.Queries.LoginAdmin;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +20,10 @@ public class AuthController : ApiControllerBase
     [HttpPost("[action]")]
     public async Task<ActionResult> Login(LoginQuery query)
     => Ok(await Mediator.Send(query));
+
+    [HttpPost("[action]")]
+    public async Task<ActionResult> LoginAnonymous(LoginAnonymousCommand command)
+    => Ok(await Mediator.Send(command));
 
     [HttpPost("[action]")]
     public async Task<ActionResult> Register(RegisterCommand command)

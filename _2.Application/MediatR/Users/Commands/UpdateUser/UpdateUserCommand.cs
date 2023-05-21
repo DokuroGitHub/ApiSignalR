@@ -3,7 +3,7 @@ using Application.Common.Interfaces;
 using Application.Common.Mappings;
 using AutoMapper;
 using Domain.Entities;
-using Domain.Events;
+using Domain.Events.Users;
 using MediatR;
 
 namespace Application.MediatR.Users.Commands.UpdateUser;

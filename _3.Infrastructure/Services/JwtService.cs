@@ -31,8 +31,8 @@ public class JwtService : IJwtService
             new Claim("Id", user.UserId.ToString()),
             new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
             new Claim("Email", user.Email??""),
-            new Claim("Role", user.Role),
-            new Claim(ClaimTypes.Role, user.Role),
+            new Claim("Role", user.Role.ToStringValue()),
+            new Claim(ClaimTypes.Role, user.Role.ToStringValue()),
         };
         var token = new JwtSecurityToken(
             claims: claims,

@@ -29,7 +29,7 @@ public class UpdateMessageAttachmentDto : IMapFrom<MessageAttachment>
     public string? FileUrl { get; init; }
     public string? ThumbUrl { get; init; }
     public AttachmentType Type { get; init; }
-    // ref
+    //* ref
     // map
     public void Mapping(Profile profile)
     {

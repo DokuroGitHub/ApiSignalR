@@ -1,5 +1,5 @@
 ﻿using Application.Common.Interfaces;
-using Domain.Events;
+using Domain.Events.Users;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

@@ -1,5 +1,5 @@
-﻿using Application.MediatR.Auth.Queries.LoginThirtParty;
-using Application.MediatR.Auth.Queries.RegisterThirtParty;
+﻿using Application.MediatR.Auth.Commands.LoginThirdParty;
+using Application.MediatR.Auth.Queries.RegisterThirdParty;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1_1;
@@ -9,10 +9,10 @@ namespace Api.Controllers.v1_1;
 public class AuthController : ApiControllerBase
 {
     [HttpPost("[action]")]
-    public async Task<ActionResult> LoginThirtParty(LoginThirtPartyQuery query)
-    => Ok(await Mediator.Send(query));
+    public async Task<ActionResult> LoginThirdParty(LoginThirdPartyCommand command)
+    => Ok(await Mediator.Send(command));
 
     [HttpPost("[action]")]
-    public async Task<ActionResult> RegisterThirtParty(RegisterThirtPartyQuery query)
+    public async Task<ActionResult> RegisterThirdParty(RegisterThirdPartyQuery query)
     => Ok(await Mediator.Send(query));
 }

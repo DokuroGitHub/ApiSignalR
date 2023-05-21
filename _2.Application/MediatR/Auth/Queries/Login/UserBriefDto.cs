@@ -1,5 +1,6 @@
 ﻿using Application.Common.Mappings;
 using Domain.Entities;
+using Domain.Enums;
 
 namespace Application.MediatR.Auth.Queries.Login;
 
@@ -9,6 +10,6 @@ public class UserBriefDto : IMapFrom<User>
     public int Id { get; init; }
     public string DisplayName { get; init; }
     public string Email { get; init; }
-    public string Role { get; init; }
+    public UserRole Role { get; init; }
     public string PasswordHash { get; init; }
 }

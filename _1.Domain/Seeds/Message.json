@@ -3,9 +3,9 @@
     "Id": 1,
     "ConversationId": 1,
     "CreatedBy": 1,
+    "DeletedBy": null,
     "CreatedAt": "2021-05-30T15:01:01",
     "UpdatedAt": null,
-    "DeletedBy": null,
     "DeletedAt": null,
     "Text": "message1 of deleted conversation",
     "ReplyTo": null
@@ -14,9 +14,9 @@
     "Id": 2,
     "ConversationId": 2,
     "CreatedBy": 1,
+    "DeletedBy": null,
     "CreatedAt": "2021-05-30T15:01:01",
     "UpdatedAt": "2022-05-30T15:01:01",
-    "DeletedBy": null,
     "DeletedAt": null,
     "Text": "message2 edited",
     "ReplyTo": null
@@ -25,9 +25,9 @@
     "Id": 3,
     "ConversationId": 2,
     "CreatedBy": 2,
+    "DeletedBy": null,
     "CreatedAt": "2021-05-30T15:01:01",
     "UpdatedAt": null,
-    "DeletedBy": null,
     "DeletedAt": null,
     "Text": "message3 reply to message2",
     "ReplyTo": 2
@@ -36,9 +36,9 @@
     "Id": 4,
     "ConversationId": 2,
     "CreatedBy": 1,
+    "DeletedBy": 1,
     "CreatedAt": "2021-05-30T15:01:01",
     "UpdatedAt": "2022-05-30T15:01:01",
-    "DeletedBy": 1,
     "DeletedAt": "2023-04-30T15:01:01",
     "Text": "message4 deleted",
     "ReplyTo": null

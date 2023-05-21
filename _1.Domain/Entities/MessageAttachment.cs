@@ -8,6 +8,7 @@ public class MessageAttachment : BaseEntity
     public string? FileUrl { get; set; }
     public string? ThumbUrl { get; set; }
     public AttachmentType Type { get; set; }
-    // ref
+    //* ref
+    // Message
     public virtual Message Message { get; set; }
 }

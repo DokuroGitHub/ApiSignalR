@@ -49,6 +49,7 @@ public static class ConfigureServices
         services.AddScoped<IMessageEmoteRepository, MessageEmoteRepository>();
         services.AddScoped<IMessageRepository, MessageRepository>();
         services.AddScoped<IParticipantRepository, ParticipantRepository>();
+        services.AddScoped<ISampleUserRepository, SampleUserRepository>();
         services.AddScoped<ITodoItemRepository, TodoItemRepository>();
         services.AddScoped<ITodoListRepository, TodoListRepository>();
         services.AddScoped<IUserRepository, UserRepository>();

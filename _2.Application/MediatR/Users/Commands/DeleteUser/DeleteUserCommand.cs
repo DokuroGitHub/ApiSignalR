@@ -1,7 +1,7 @@
 ﻿using Application.Common.Exceptions;
 using Application.Common.Interfaces;
 using Domain.Entities;
-using Domain.Events;
+using Domain.Events.Users;
 using MediatR;
 
 namespace Application.MediatR.Users.Commands.DeleteUser;

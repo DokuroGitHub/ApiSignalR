@@ -15,7 +15,7 @@ public record CreateParticipantCommand : IRequest, IMapFrom<Participant>
     public int UserId { get; init; }
     public string? Nickname { get; init; }
     public ConversationRole? Role { get; init; }
-    // ref
+    //* ref
     // map
     public void Mapping(Profile profile)
     {

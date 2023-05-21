@@ -1,10 +1,10 @@
 ﻿using System.Text.Json.Serialization;
-using Application.Common.Interfaces.AuthThirtParty;
+using Application.Common.Interfaces.AuthThirdParty;
 using MediatR;
 
-namespace Application.MediatR.Auth.Queries.RegisterThirtParty;
+namespace Application.MediatR.Auth.Queries.RegisterThirdParty;
 
-public record RegisterThirtPartyQuery : IRequest<RegisterResponse>
+public record RegisterThirdPartyQuery : IRequest<RegisterResponse>
 {
 #pragma warning disable
     public string Username { get; init; }
@@ -24,7 +24,7 @@ public enum UserGender
     Female = 1
 }
 
-public class LoginQueryHandler : IRequestHandler<RegisterThirtPartyQuery, RegisterResponse>
+public class LoginQueryHandler : IRequestHandler<RegisterThirdPartyQuery, RegisterResponse>
 {
     private readonly IAuthThirdPartyService _authThirtPartyService;
 
@@ -37,7 +37,7 @@ public class LoginQueryHandler : IRequestHandler<RegisterThirtPartyQuery, Regist
         _authThirtPartyService = authThirtPartyService;
     }
 
-    public Task<RegisterResponse> Handle(RegisterThirtPartyQuery request, CancellationToken cancellationToken)
+    public Task<RegisterResponse> Handle(RegisterThirdPartyQuery request, CancellationToken cancellationToken)
     => _authThirtPartyService.Register(new RegisterRequest()
     {
         Email = request.Username,

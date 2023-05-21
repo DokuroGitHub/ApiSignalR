@@ -15,12 +15,20 @@ public class DeletedMessageConfiguration : IEntityTypeConfiguration<DeletedMessa
         builder
             .Property(x => x.CreatedAt)
             .HasDefaultValueSql("GETDATE()");
-        // ref
+        //* ref
+        // Message
         builder
             .HasOne(x => x.Message)
             .WithMany(x => x.DeletedMessages)
             .HasForeignKey(x => x.MessageId)
             .HasPrincipalKey(x => x.Id)
             .HasConstraintName("FK_DeletedMessage_MessageId");
+        // User
+        builder
+            .HasOne(x => x.Creator)
+            .WithMany(x => x.CreatedDeletedMessages)
+            .HasForeignKey(x => x.CreatedBy)
+            .HasPrincipalKey(x => x.Id)
+            .HasConstraintName("FK_DeletedMessage_CreatedBy");
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Domain.Events;
+﻿namespace Domain.Events.Users;
 
 public class UserAfterDeleteEvent : BaseEvent
 {

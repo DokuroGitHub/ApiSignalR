@@ -11,23 +11,28 @@ public class MessageEmoteConfiguration : IEntityTypeConfiguration<MessageEmote>
     {
         builder.ToTable("MessageEmote");
         builder
-            .HasKey(x => x.Id)
-            .HasName("PK_MessageEmote_Id");
+            .HasKey(x => new { x.MessageId, x.UserId })
+            .HasName("PK_MessageEmote_MessageId_UserId");
         builder
-            .Property(x => x.Id)
-            .ValueGeneratedOnAdd();
-        builder
-            .Property(x => x.CreatedAt)
+            .Property(x => x.UpdatedAt)
             .HasDefaultValueSql("GETDATE()");
         builder
             .Property(x => x.Code)
             .HasDefaultValue(EmoteCode.Like);
-        // ref
+        //* ref
+        // Message
         builder
             .HasOne(x => x.Message)
             .WithMany(x => x.Emotes)
             .HasForeignKey(x => x.MessageId)
             .HasPrincipalKey(x => x.Id)
             .HasConstraintName("FK_MessageEmote_MessageId");
+        // User
+        builder
+            .HasOne(x => x.User)
+            .WithMany(x => x.MessageEmotes)
+            .HasForeignKey(x => x.UserId)
+            .HasPrincipalKey(x => x.Id)
+            .HasConstraintName("FK_MessageEmote_UserId");
     }
 }

@@ -3,11 +3,13 @@ namespace Domain.Entities;
 #pragma warning disable
 public class MessageEmote : BaseEntity
 {
-    public int Id { get; set; }
     public int MessageId { get; set; }
-    public int CreatedBy { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public int UserId { get; set; }
+    public DateTime UpdatedAt { get; set; }
     public EmoteCode Code { get; set; }
-    // ref
+    //* ref
+    // Message
     public virtual Message Message { get; set; }
+    // User
+    public virtual User User { get; set; }
 }

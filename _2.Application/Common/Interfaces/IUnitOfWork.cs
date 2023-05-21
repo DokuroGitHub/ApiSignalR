@@ -15,6 +15,7 @@ public interface IUnitOfWork : IDisposable
     public IMessageEmoteRepository MessageEmoteRepository { get; }
     public IMessageRepository MessageRepository { get; }
     public IParticipantRepository ParticipantRepository { get; }
+    public ISampleUserRepository SampleUserRepository { get; }
     public ITodoListRepository TodoListRepository { get; }
     public ITodoItemRepository TodoItemRepository { get; }
     public IUserRepository UserRepository { get; }
