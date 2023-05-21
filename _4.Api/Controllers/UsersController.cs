@@ -6,6 +6,7 @@ using Application.MediatR.Users.Queries.GetUsers;
 using Application.MediatR.Users.Queries.GetPagedUsers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.JsonPatch;
+using Application.MediatR.Users.Commands.UpdateUserLastSeen;
 
 namespace Api.Controllers;
 
@@ -77,6 +78,13 @@ public class UsersController : ApiControllerBase
     {
         await Mediator.Send(new DeleteUserCommand(id));
 
+        return NoContent();
+    }
+
+    [HttpGet("[action]")]
+    public async Task<IActionResult> UpdateUserLastSeen()
+    {
+        await Mediator.Send(new UpdateUserLastSeenCommand());
         return NoContent();
     }
 }

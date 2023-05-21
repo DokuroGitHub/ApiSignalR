@@ -17,6 +17,7 @@ public class User : BaseEntity
     public int? UpdatedBy { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
+    public DateTime? LastSeen { get; set; }
     // ghost
     public string DisplayName { get; set; }
     //* ref
