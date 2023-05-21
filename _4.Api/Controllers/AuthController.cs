@@ -1,6 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using Application.MediatR.Auth.Commands.LoginAnonymous;
 using Application.MediatR.Auth.Commands.Register;
+using Application.MediatR.Auth.Queries.GetCurrentUser;
 using Application.MediatR.Auth.Queries.Login;
 using Application.MediatR.Auth.Queries.LoginAdmin;
 using Microsoft.AspNetCore.Mvc;
@@ -36,4 +37,8 @@ public class AuthController : ApiControllerBase
     [HttpGet("[action]")]
     public ActionResult GetCurrentUserId()
     => Ok(_currentUserService.UserId);
+
+    [HttpGet("[action]")]
+    public async Task<ActionResult> GetCurrentUserAsync()
+    => Ok(await Mediator.Send(new GetCurrentUserQuery()));
 }
