@@ -22,7 +22,7 @@ public class UserBeforeInsertEventHandler : INotificationHandler<UserBeforeInser
     {
         _logger.LogInformation("CleanArchitecture Domain Event: {DomainEvent}", notification.GetType().Name);
         // notification.Item.CreatedAt = _dateTimeService.Now; // no need bc of default value
-        notification.Item.CreatedBy = _currentUserService.UserId ?? 0;
+        notification.Item.CreatedBy = _currentUserService.UserId ?? 1;
         return Task.CompletedTask;
     }
 }

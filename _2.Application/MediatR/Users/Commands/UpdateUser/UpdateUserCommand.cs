@@ -11,6 +11,7 @@ namespace Application.MediatR.Users.Commands.UpdateUser;
 public record UpdateUserCommand : IRequest, IMapFrom<User>
 {
     public int Id { get; set; }
+    public string? AvatarUrl { get; init; }
     public string? FirstName { get; init; }
     public string? LastName { get; init; }
 
@@ -18,6 +19,7 @@ public record UpdateUserCommand : IRequest, IMapFrom<User>
     {
         profile.CreateMap<UpdateUserCommand, User>()
             .ForMember(des => des.Id, opt => opt.Ignore())
+            .ForMember(des => des.AvatarUrl, opt => opt.Condition(src => src.AvatarUrl != null))
             .ForMember(des => des.FirstName, opt => opt.Condition(src => src.FirstName != null))
             .ForMember(des => des.LastName, opt => opt.Condition(src => src.LastName != null));
     }

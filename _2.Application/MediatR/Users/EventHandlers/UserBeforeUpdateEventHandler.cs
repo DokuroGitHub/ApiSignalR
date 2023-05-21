@@ -25,7 +25,7 @@ public class UserBeforeUpdateEventHandler : INotificationHandler<UserBeforeUpdat
     {
         _logger.LogInformation("CleanArchitecture Domain Event: {DomainEvent}", notification.GetType().Name);
         notification.Item.UpdatedAt = _dateTimeService.Now;
-        notification.Item.UpdatedBy = _currentUserService.UserId ?? 0;
+        notification.Item.UpdatedBy = _currentUserService.UserId ?? 1;
         return Task.CompletedTask;
     }
 }

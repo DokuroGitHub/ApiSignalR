@@ -18,9 +18,16 @@ public class SampleUserConfiguration : IEntityTypeConfiguration<SampleUser>
             .Property(x => x.Id)
             .ValueGeneratedOnAdd();
         builder
+            .Property(x => x.FirstName)
+            .HasMaxLength(100);
+        builder
+            .Property(x => x.LastName)
+            .HasMaxLength(100);
+        builder
             .HasIndex(x => x.Email, "IX_SampleUser_Email");
         builder
             .Property(x => x.Username)
+            .HasMaxLength(100)
             .ValueGeneratedOnAdd();
         builder
             .HasIndex(x => x.Username, "IX_SampleUser_Username")
@@ -30,9 +37,8 @@ public class SampleUserConfiguration : IEntityTypeConfiguration<SampleUser>
             .HasPrecision(18, 2);
         builder
             .Property(x => x.Role)
-            .HasDefaultValue(UserRole.User);
-        builder
-            .Property(x => x.Role)
+            .HasDefaultValue(UserRole.User)
+            .HasMaxLength(10)
             .HasConversion(
                 x => x.ToStringValue(),
                 x => x.ToUserRole()
@@ -43,6 +49,7 @@ public class SampleUserConfiguration : IEntityTypeConfiguration<SampleUser>
         // ghost
         builder
             .Property(x => x.DisplayName)
+            .HasMaxLength(201)
             .HasComputedColumnSql(@"
 CASE
     WHEN [FirstName] IS NOT NULL AND [FirstName] <> ''

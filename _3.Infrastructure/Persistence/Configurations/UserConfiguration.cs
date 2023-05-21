@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.Common;
+using Domain.Entities;
 using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -36,19 +37,23 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasIndex(x => x.Email, "IX_User_Email");
         builder
             .Property(x => x.Username)
-            .ValueGeneratedOnAdd()
+            .HasDefaultValueSql("NEWID()")
             .HasMaxLength(100);
         builder
             .HasIndex(x => x.Username, "IX_User_Username")
             .IsUnique();
         builder
             .Property(x => x.PasswordHash)
-            .ValueGeneratedOnAdd()
+            .HasDefaultValueSql("NEWID()")
             .HasMaxLength(100);
         builder
             .Property(x => x.Role)
             .HasDefaultValue(UserRole.Anonymous)
-            .HasMaxLength(10);
+            .HasMaxLength(10)
+            .HasConversion(
+                x => x.ToStringValue(),
+                x => x.ToUserRole()
+            );
         builder
             .Property(x => x.CreatedAt)
             .HasDefaultValueSql("GETDATE()")
@@ -59,17 +64,18 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         // ghost
         builder
             .Property(x => x.DisplayName)
+            .HasMaxLength(201)
             .HasComputedColumnSql(@"
 CASE
     WHEN [FirstName] IS NOT NULL AND [FirstName] <> ''
         THEN CASE
-  			WHEN [LastName] IS NOT NULL AND [LastName] <> '' 
-       			THEN [FirstName] + ' ' + [LastName]
-       		ELSE [FirstName]
-  		END
+            WHEN [LastName] IS NOT NULL AND [LastName] <> '' 
+                THEN [FirstName] + ' ' + [LastName]
+            ELSE [FirstName]
+        END
     WHEN [LastName] IS NOT NULL AND [LastName] <> '' THEN [LastName]
     WHEN [Email] IS NOT NULL AND [Email] <> '' THEN [Email]
-	ELSE CAST([Id] AS varchar)
+    ELSE CAST([Id] AS varchar)
 END", stored: false);
         //* ref
         // User
@@ -78,7 +84,7 @@ END", stored: false);
             .WithMany(x => x.CreatedUsers)
             .HasForeignKey(x => x.CreatedBy)
             .HasPrincipalKey(x => x.Id)
-            .OnDelete(DeleteBehavior.ClientCascade);
+            .OnDelete(DeleteBehavior.Restrict);
         builder
             .HasOne(x => x.Updater)
             .WithMany(x => x.UpdatedUsers)
@@ -115,33 +121,33 @@ END", stored: false);
             .WithOne(x => x.Deleter)
             .HasForeignKey(x => x.DeletedBy)
             .HasPrincipalKey(x => x.Id)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.ClientSetNull);
         // ConversationBlock
         builder
             .HasMany(x => x.ConversationBlocks)
             .WithOne(x => x.User)
             .HasForeignKey(x => x.UserId)
             .HasPrincipalKey(x => x.Id)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
         builder
             .HasMany(x => x.CreatedConversationBlocks)
             .WithOne(x => x.Creator)
             .HasForeignKey(x => x.CreatedBy)
             .HasPrincipalKey(x => x.Id)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
         // ConversationInvitation
         builder
             .HasMany(x => x.Invitations)
             .WithOne(x => x.User)
             .HasForeignKey(x => x.UserId)
             .HasPrincipalKey(x => x.Id)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
         builder
             .HasMany(x => x.CreatedInvitations)
             .WithOne(x => x.Creator)
             .HasForeignKey(x => x.CreatedBy)
             .HasPrincipalKey(x => x.Id)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
         builder
             .HasMany(x => x.JudgedInvitations)
             .WithOne(x => x.Judger)
@@ -154,7 +160,7 @@ END", stored: false);
             .WithOne(x => x.Creator)
             .HasForeignKey(x => x.CreatedBy)
             .HasPrincipalKey(x => x.Id)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
         // Message
         builder
             .HasMany(x => x.CreatedMessages)
@@ -174,14 +180,14 @@ END", stored: false);
             .WithOne(x => x.User)
             .HasForeignKey(x => x.UserId)
             .HasPrincipalKey(x => x.Id)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
         // Participant
         builder
             .HasMany(x => x.Participants)
             .WithOne(x => x.User)
             .HasForeignKey(x => x.UserId)
             .HasPrincipalKey(x => x.Id)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
         builder
             .HasMany(x => x.CreatedParticipants)
             .WithOne(x => x.Creator)

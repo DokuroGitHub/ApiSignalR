@@ -11,6 +11,8 @@ namespace Application.MediatR.Users.Commands.CreateUser;
 #pragma warning disable
 public record CreateUserCommand : IRequest<int>, IMapFrom<User>
 {
+    public string? UserId { get; init; }
+    public string? AvatarUrl { get; init; }
     public string? FirstName { get; init; }
     public string? LastName { get; init; }
     public string? Email { get; init; }

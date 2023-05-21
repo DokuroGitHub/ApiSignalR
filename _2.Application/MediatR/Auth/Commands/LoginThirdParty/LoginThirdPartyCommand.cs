@@ -5,8 +5,6 @@ using Domain.Common;
 using Domain.Entities;
 using Domain.Enums;
 using Domain.Events.Users;
-using FluentValidation;
-using FluentValidation.Results;
 using MediatR;
 
 namespace Application.MediatR.Auth.Commands.LoginThirdParty;
@@ -42,13 +40,6 @@ public class LoginQueryHandler : IRequestHandler<LoginThirdPartyCommand, LoginRe
             Email = request.Email,
             Password = request.Password,
         });
-
-        if (response is null)
-        {
-            throw new ValidationException(new List<ValidationFailure>(){
-                new ValidationFailure("Login", "Login failed, please check your credentials."),
-            });
-        }
 
         var userId = $"UserId_{response.Id}";
 

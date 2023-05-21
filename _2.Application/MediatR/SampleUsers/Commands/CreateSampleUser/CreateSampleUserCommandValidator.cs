@@ -18,16 +18,16 @@ public class CreateSampleUserCommandValidator : AbstractValidator<CreateSampleUs
         RuleFor(x => x.Email)
             .NotEmpty().WithMessage("Email is required.")
             .MinimumLength(6).WithMessage("Email must not less than 6 characters.")
-            .MaximumLength(20).WithMessage("Email must not exceed 20 characters.")
+            .MaximumLength(100).WithMessage("Email must not exceed 100 characters.")
             .MustAsync(BeUniqueSampleUsername).WithMessage("The specified Email already exists.");
         RuleFor(x => x.Password)
             .NotEmpty().WithMessage("Password is required.")
             .MinimumLength(6).WithMessage("Password must not less than 6 characters.")
-            .MaximumLength(20);
+            .MaximumLength(100).WithMessage("Password must not exceed 100 characters.");
         RuleFor(x => x.SampleUsername)
             .NotEmpty().WithMessage("SampleUsername is required.")
             .MinimumLength(6).WithMessage("SampleUsername must not less than 6 characters.")
-            .MaximumLength(20).WithMessage("SampleUsername must not exceed 20 characters.")
+            .MaximumLength(100).WithMessage("SampleUsername must not exceed 100 characters.")
             .MustAsync(BeUniqueSampleUsername).WithMessage("The specified SampleUsername already exists.");
     }
 

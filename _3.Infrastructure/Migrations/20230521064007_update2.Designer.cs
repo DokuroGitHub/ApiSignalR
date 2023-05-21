@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace _3.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230520065906_update4")]
-    partial class update4
+    [Migration("20230521064007_update2")]
+    partial class update2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,9 +68,15 @@ namespace _3.Infrastructure.Migrations
                     b.HasKey("Id")
                         .HasName("PK_Conversation_Id");
 
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("DeletedBy");
+
                     b.HasIndex("LastMessageId")
                         .IsUnique()
                         .HasFilter("[LastMessageId] IS NOT NULL");
+
+                    b.HasIndex("UpdatedBy");
 
                     b.ToTable("Conversation", (string)null);
 
@@ -129,6 +135,10 @@ namespace _3.Infrastructure.Migrations
                     b.HasKey("ConversationId", "UserId", "CreatedBy")
                         .HasName("PK_ConversationBlock_ConversationId_UserId_CreatedBy");
 
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("UserId");
+
                     b.ToTable("ConversationBlock", (string)null);
 
                     b.HasData(
@@ -181,6 +191,12 @@ namespace _3.Infrastructure.Migrations
                         .HasName("PK_ConversationInvitation_Id");
 
                     b.HasIndex("ConversationId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("JudgedBy");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ConversationInvitation", (string)null);
 
@@ -245,6 +261,8 @@ namespace _3.Infrastructure.Migrations
                     b.HasKey("MessageId", "CreatedBy")
                         .HasName("PK_DeletedMessage_MessageId_CreatedBy");
 
+                    b.HasIndex("CreatedBy");
+
                     b.ToTable("DeletedMessage", (string)null);
 
                     b.HasData(
@@ -294,6 +312,10 @@ namespace _3.Infrastructure.Migrations
                         .HasName("PK_Message_Id");
 
                     b.HasIndex("ConversationId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("DeletedBy");
 
                     b.HasIndex("ReplyTo");
 
@@ -371,7 +393,7 @@ namespace _3.Infrastructure.Migrations
                             FileUrl = "https://i.pinimg.com/736x/eb/b4/24/ebb4240e278b99f7ec49a5a51980e187.jpg",
                             MessageId = 2,
                             ThumbUrl = "https://i.pinimg.com/736x/eb/b4/24/ebb4240e278b99f7ec49a5a51980e187.jpg",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -385,59 +407,50 @@ namespace _3.Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.MessageEmote", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("MessageId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Code")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(0);
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
+                    b.HasKey("MessageId", "UserId")
+                        .HasName("PK_MessageEmote_MessageId_UserId");
 
-                    b.Property<int>("MessageId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id")
-                        .HasName("PK_MessageEmote_Id");
-
-                    b.HasIndex("MessageId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("MessageEmote", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            MessageId = 2,
+                            UserId = 1,
                             Code = 0,
-                            CreatedAt = new DateTime(2021, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified),
-                            CreatedBy = 1,
-                            MessageId = 2
+                            UpdatedAt = new DateTime(2021, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = 2,
+                            MessageId = 2,
+                            UserId = 2,
                             Code = 2,
-                            CreatedAt = new DateTime(2021, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified),
-                            CreatedBy = 2,
-                            MessageId = 2
+                            UpdatedAt = new DateTime(2021, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            Id = 3,
+                            MessageId = 3,
+                            UserId = 1,
                             Code = 1,
-                            CreatedAt = new DateTime(2021, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified),
-                            CreatedBy = 1,
-                            MessageId = 3
+                            UpdatedAt = new DateTime(2021, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -479,6 +492,14 @@ namespace _3.Infrastructure.Migrations
 
                     b.HasKey("ConversationId", "UserId")
                         .HasName("PK_Participant_ConversationId_UserId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("DeletedBy");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Participant", (string)null);
 
@@ -525,7 +546,139 @@ namespace _3.Infrastructure.Migrations
                             CreatedBy = 1,
                             DeletedAt = new DateTime(2023, 4, 30, 15, 1, 1, 0, DateTimeKind.Unspecified),
                             DeletedBy = 1,
-                            Role = 0
+                            Role = 0,
+                            UpdatedAt = new DateTime(2023, 4, 30, 15, 1, 1, 0, DateTimeKind.Unspecified)
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.SampleUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasMaxLength(201)
+                        .HasColumnType("nvarchar(201)")
+                        .HasComputedColumnSql("\r\nCASE\r\n    WHEN [FirstName] IS NOT NULL AND [FirstName] <> ''\r\n        THEN CASE\r\n  			WHEN [LastName] IS NOT NULL AND [LastName] <> '' \r\n       			THEN [FirstName] + ' ' + [LastName]\r\n       		ELSE [FirstName]\r\n  		END\r\n    WHEN [LastName] IS NOT NULL AND [LastName] <> '' THEN [LastName]\r\n    WHEN [Email] IS NOT NULL AND [Email] <> '' THEN [Email]\r\n	ELSE CAST([Id] AS varchar)\r\nEND", false);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("LastName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("ManagerId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Money")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasDefaultValue("User");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id")
+                        .HasName("PK_SampleUser_Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("ManagerId");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.HasIndex(new[] { "Email" }, "IX_SampleUser_Email");
+
+                    b.HasIndex(new[] { "Username" }, "IX_SampleUser_Username")
+                        .IsUnique();
+
+                    b.ToTable("SampleUser", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_SampleUser_Money", "[Money] >= 0");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2021, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified),
+                            CreatedBy = 1,
+                            Email = "tamthoidetrong@gmail.com",
+                            FirstName = "Võ",
+                            LastName = "Thành Đô",
+                            Money = 1999999999m,
+                            PasswordHash = "$2a$11$2PJMSufmjtIbktnDZ8nbHejByAc9I.wkVQx9u.uzlyye8NhEPMNl6",
+                            Role = "Admin",
+                            UpdatedAt = new DateTime(2022, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified),
+                            UpdatedBy = 1,
+                            Username = "tamthoidetrong@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2022, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified),
+                            CreatedBy = 1,
+                            Email = "dokuro.jp@gmail.com",
+                            FirstName = "Dokuro",
+                            LastName = "JP",
+                            Money = 69m,
+                            PasswordHash = "$2a$11$2PJMSufmjtIbktnDZ8nbHejByAc9I.wkVQx9u.uzlyye8NhEPMNl6",
+                            Role = "User",
+                            UpdatedAt = new DateTime(2023, 5, 5, 15, 1, 1, 0, DateTimeKind.Unspecified),
+                            Username = "dokuro.jp@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2023, 5, 5, 15, 1, 1, 0, DateTimeKind.Unspecified),
+                            CreatedBy = 1,
+                            Email = "dovt58@gmail.com",
+                            FirstName = "dovt58",
+                            LastName = "GG",
+                            ManagerId = 2,
+                            Money = 0m,
+                            PasswordHash = "$2a$11$2PJMSufmjtIbktnDZ8nbHejByAc9I.wkVQx9u.uzlyye8NhEPMNl6",
+                            Role = "User",
+                            UpdatedAt = new DateTime(2023, 5, 6, 15, 1, 1, 0, DateTimeKind.Unspecified),
+                            UpdatedBy = 1,
+                            Username = "dovt58@gmail.com"
                         });
                 });
 
@@ -614,8 +767,12 @@ namespace _3.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AvatarUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
+                        .HasMaxLength(39)
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
 
@@ -625,77 +782,96 @@ namespace _3.Infrastructure.Migrations
                     b.Property<string>("DisplayName")
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("nvarchar(max)")
-                        .HasComputedColumnSql("\r\nCASE\r\n    WHEN [FirstName] IS NOT NULL AND [FirstName] <> ''\r\n        THEN CASE\r\n  			WHEN [LastName] IS NOT NULL AND [LastName] <> '' \r\n       			THEN [FirstName] + ' ' + [LastName]\r\n       		ELSE [FirstName]\r\n  		END\r\n    WHEN [LastName] IS NOT NULL AND [LastName] <> '' THEN [LastName]\r\n    WHEN [Email] IS NOT NULL AND [Email] <> '' THEN [Email]\r\n	ELSE CAST([Id] AS varchar)\r\nEND", false);
+                        .HasMaxLength(201)
+                        .HasColumnType("nvarchar(201)")
+                        .HasComputedColumnSql("\r\nCASE\r\n    WHEN [FirstName] IS NOT NULL AND [FirstName] <> ''\r\n        THEN CASE\r\n            WHEN [LastName] IS NOT NULL AND [LastName] <> '' \r\n                THEN [FirstName] + ' ' + [LastName]\r\n            ELSE [FirstName]\r\n        END\r\n    WHEN [LastName] IS NOT NULL AND [LastName] <> '' THEN [LastName]\r\n    WHEN [Email] IS NOT NULL AND [Email] <> '' THEN [Email]\r\n    ELSE CAST([Id] AS varchar)\r\nEND", false);
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ManagerId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Money")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValueSql("NEWID()");
 
                     b.Property<string>("Role")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("user");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasDefaultValue("User");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
+                        .HasMaxLength(39)
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValueSql("NEWID()");
 
                     b.HasKey("Id")
                         .HasName("PK_User_Id");
 
                     b.HasIndex("CreatedBy");
 
-                    b.HasIndex("ManagerId");
-
                     b.HasIndex("UpdatedBy");
 
                     b.HasIndex(new[] { "Email" }, "IX_User_Email");
 
+                    b.HasIndex(new[] { "UserId" }, "IX_User_UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
+
                     b.HasIndex(new[] { "Username" }, "IX_User_Username")
                         .IsUnique();
 
-                    b.ToTable("User", null, t =>
-                        {
-                            t.HasCheckConstraint("CK_User_Money", "[Money] >= 0");
-                        });
+                    b.ToTable("User", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             CreatedAt = new DateTime(2021, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified),
+                            FirstName = "System",
+                            PasswordHash = "$2a$11$2PJMSufmjtIbktnDZ8nbHejByAc9I.wkVQx9u.uzlyye8NhEPMNl6",
+                            Role = "Admin",
+                            Username = "system"
+                        },
+                        new
+                        {
+                            Id = 1234567890,
+                            CreatedAt = new DateTime(2021, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified),
                             CreatedBy = 1,
                             Email = "tamthoidetrong@gmail.com",
                             FirstName = "Võ",
                             LastName = "Thành Đô",
-                            Money = 1999999999m,
                             PasswordHash = "$2a$11$2PJMSufmjtIbktnDZ8nbHejByAc9I.wkVQx9u.uzlyye8NhEPMNl6",
-                            Role = "admin",
+                            Role = "Admin",
                             UpdatedAt = new DateTime(2022, 5, 30, 15, 1, 1, 0, DateTimeKind.Unspecified),
                             UpdatedBy = 1,
                             Username = "tamthoidetrong@gmail.com"
@@ -708,9 +884,8 @@ namespace _3.Infrastructure.Migrations
                             Email = "dokuro.jp@gmail.com",
                             FirstName = "Dokuro",
                             LastName = "JP",
-                            Money = 69m,
                             PasswordHash = "$2a$11$2PJMSufmjtIbktnDZ8nbHejByAc9I.wkVQx9u.uzlyye8NhEPMNl6",
-                            Role = "user",
+                            Role = "User",
                             UpdatedAt = new DateTime(2023, 5, 5, 15, 1, 1, 0, DateTimeKind.Unspecified),
                             Username = "dokuro.jp@gmail.com"
                         },
@@ -722,24 +897,59 @@ namespace _3.Infrastructure.Migrations
                             Email = "dovt58@gmail.com",
                             FirstName = "dovt58",
                             LastName = "GG",
-                            ManagerId = 2,
-                            Money = 0m,
                             PasswordHash = "$2a$11$2PJMSufmjtIbktnDZ8nbHejByAc9I.wkVQx9u.uzlyye8NhEPMNl6",
-                            Role = "user",
+                            Role = "User",
                             UpdatedAt = new DateTime(2023, 5, 6, 15, 1, 1, 0, DateTimeKind.Unspecified),
                             UpdatedBy = 1,
                             Username = "dovt58@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2023, 5, 5, 15, 1, 1, 0, DateTimeKind.Unspecified),
+                            CreatedBy = 1,
+                            Email = "gidoquenroi1@gmail.com",
+                            FirstName = "gidoquenroi1",
+                            LastName = "GG",
+                            PasswordHash = "$2a$11$2PJMSufmjtIbktnDZ8nbHejByAc9I.wkVQx9u.uzlyye8NhEPMNl6",
+                            Role = "User",
+                            UpdatedAt = new DateTime(2023, 5, 6, 15, 1, 1, 0, DateTimeKind.Unspecified),
+                            UpdatedBy = 1,
+                            Username = "gidoquenroi1@gmail.com"
                         });
                 });
 
             modelBuilder.Entity("Domain.Entities.Conversation", b =>
                 {
+                    b.HasOne("Domain.Entities.User", "Creator")
+                        .WithMany("CreatedConversations")
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_Conversation_CreatedBy");
+
+                    b.HasOne("Domain.Entities.User", "Deleter")
+                        .WithMany("DeletedConversations")
+                        .HasForeignKey("DeletedBy")
+                        .HasConstraintName("FK_Conversation_DeletedBy");
+
                     b.HasOne("Domain.Entities.Message", "LastMessage")
-                        .WithOne("LastMessageOfConversation")
+                        .WithOne("LastMessageNoConversation")
                         .HasForeignKey("Domain.Entities.Conversation", "LastMessageId")
                         .HasConstraintName("FK_Conversation_LastMessageId");
 
+                    b.HasOne("Domain.Entities.User", "Updater")
+                        .WithMany("UpdatedConversations")
+                        .HasForeignKey("UpdatedBy")
+                        .HasConstraintName("FK_Conversation_UpdatedBy");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Deleter");
+
                     b.Navigation("LastMessage");
+
+                    b.Navigation("Updater");
                 });
 
             modelBuilder.Entity("Domain.Entities.ConversationBlock", b =>
@@ -751,7 +961,25 @@ namespace _3.Infrastructure.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_ConversationBlock_ConversationId");
 
+                    b.HasOne("Domain.Entities.User", "Creator")
+                        .WithMany("CreatedConversationBlocks")
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_ConversationBlock_CreatedBy");
+
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany("ConversationBlocks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_ConversationBlock_UserId");
+
                     b.Navigation("Conversation");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.ConversationInvitation", b =>
@@ -763,17 +991,51 @@ namespace _3.Infrastructure.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_ConversationInvitation_ConversationId");
 
+                    b.HasOne("Domain.Entities.User", "Creator")
+                        .WithMany("CreatedInvitations")
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_ConversationInvitation_CreatedBy");
+
+                    b.HasOne("Domain.Entities.User", "Judger")
+                        .WithMany("JudgedInvitations")
+                        .HasForeignKey("JudgedBy")
+                        .HasConstraintName("FK_ConversationInvitation_JudgedBy");
+
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany("Invitations")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_ConversationInvitation_UserId");
+
                     b.Navigation("Conversation");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Judger");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.DeletedMessage", b =>
                 {
+                    b.HasOne("Domain.Entities.User", "Creator")
+                        .WithMany("CreatedDeletedMessages")
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_DeletedMessage_CreatedBy");
+
                     b.HasOne("Domain.Entities.Message", "Message")
                         .WithMany("DeletedMessages")
                         .HasForeignKey("MessageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_DeletedMessage_MessageId");
+
+                    b.Navigation("Creator");
 
                     b.Navigation("Message");
                 });
@@ -787,12 +1049,29 @@ namespace _3.Infrastructure.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Message_ConversationId");
 
+                    b.HasOne("Domain.Entities.User", "Creator")
+                        .WithMany("CreatedMessages")
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_Message_CreatedBy");
+
+                    b.HasOne("Domain.Entities.User", "Deleter")
+                        .WithMany("DeletedMessages")
+                        .HasForeignKey("DeletedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("FK_Message_DeletedBy");
+
                     b.HasOne("Domain.Entities.Message", "ReplyToMessage")
                         .WithMany("Replies")
                         .HasForeignKey("ReplyTo")
                         .HasConstraintName("FK_Message_ReplyTo");
 
                     b.Navigation("Conversation");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Deleter");
 
                     b.Navigation("ReplyToMessage");
                 });
@@ -818,7 +1097,16 @@ namespace _3.Infrastructure.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_MessageEmote_MessageId");
 
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany("MessageEmotes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_MessageEmote_UserId");
+
                     b.Navigation("Message");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.Participant", b =>
@@ -830,7 +1118,65 @@ namespace _3.Infrastructure.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Participant_ConversationId");
 
+                    b.HasOne("Domain.Entities.User", "Creator")
+                        .WithMany("CreatedParticipants")
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_Participant_CreatedBy");
+
+                    b.HasOne("Domain.Entities.User", "Deleter")
+                        .WithMany("DeletedParticipants")
+                        .HasForeignKey("DeletedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("FK_Participant_DeletedBy");
+
+                    b.HasOne("Domain.Entities.User", "Updater")
+                        .WithMany("UpdatedParticipants")
+                        .HasForeignKey("UpdatedBy")
+                        .HasConstraintName("FK_Participant_UpdatedBy");
+
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany("Participants")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_Participant_UserId");
+
                     b.Navigation("Conversation");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Deleter");
+
+                    b.Navigation("Updater");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SampleUser", b =>
+                {
+                    b.HasOne("Domain.Entities.SampleUser", "Creator")
+                        .WithMany("CreatedUsers")
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .HasConstraintName("FK_SampleUser_CreatedBy");
+
+                    b.HasOne("Domain.Entities.SampleUser", "Manager")
+                        .WithMany("Employees")
+                        .HasForeignKey("ManagerId")
+                        .HasConstraintName("FK_SampleUser_ManagerId");
+
+                    b.HasOne("Domain.Entities.SampleUser", "Updater")
+                        .WithMany("UpdatedUsers")
+                        .HasForeignKey("UpdatedBy")
+                        .HasConstraintName("FK_SampleUser_UpdatedBy");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Manager");
+
+                    b.Navigation("Updater");
                 });
 
             modelBuilder.Entity("Domain.Entities.TodoItem", b =>
@@ -872,13 +1218,8 @@ namespace _3.Infrastructure.Migrations
                     b.HasOne("Domain.Entities.User", "Creator")
                         .WithMany("CreatedUsers")
                         .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("FK_User_CreatedBy");
-
-                    b.HasOne("Domain.Entities.User", "Manager")
-                        .WithMany("Employees")
-                        .HasForeignKey("ManagerId")
-                        .HasConstraintName("FK_User_ManagerId");
 
                     b.HasOne("Domain.Entities.User", "Updater")
                         .WithMany("UpdatedUsers")
@@ -886,8 +1227,6 @@ namespace _3.Infrastructure.Migrations
                         .HasConstraintName("FK_User_UpdatedBy");
 
                     b.Navigation("Creator");
-
-                    b.Navigation("Manager");
 
                     b.Navigation("Updater");
                 });
@@ -911,9 +1250,18 @@ namespace _3.Infrastructure.Migrations
 
                     b.Navigation("Emotes");
 
-                    b.Navigation("LastMessageOfConversation");
+                    b.Navigation("LastMessageNoConversation");
 
                     b.Navigation("Replies");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SampleUser", b =>
+                {
+                    b.Navigation("CreatedUsers");
+
+                    b.Navigation("Employees");
+
+                    b.Navigation("UpdatedUsers");
                 });
 
             modelBuilder.Entity("Domain.Entities.TodoList", b =>
@@ -923,9 +1271,39 @@ namespace _3.Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
+                    b.Navigation("ConversationBlocks");
+
+                    b.Navigation("CreatedConversationBlocks");
+
+                    b.Navigation("CreatedConversations");
+
+                    b.Navigation("CreatedDeletedMessages");
+
+                    b.Navigation("CreatedInvitations");
+
+                    b.Navigation("CreatedMessages");
+
+                    b.Navigation("CreatedParticipants");
+
                     b.Navigation("CreatedUsers");
 
-                    b.Navigation("Employees");
+                    b.Navigation("DeletedConversations");
+
+                    b.Navigation("DeletedMessages");
+
+                    b.Navigation("DeletedParticipants");
+
+                    b.Navigation("Invitations");
+
+                    b.Navigation("JudgedInvitations");
+
+                    b.Navigation("MessageEmotes");
+
+                    b.Navigation("Participants");
+
+                    b.Navigation("UpdatedConversations");
+
+                    b.Navigation("UpdatedParticipants");
 
                     b.Navigation("UpdatedUsers");
                 });

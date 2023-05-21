@@ -7,10 +7,10 @@ public static class UserRoleExtensions
         switch (val)
         {
             case UserRole.Admin:
-                return "admin";
+                return nameof(UserRole.Admin);
             case UserRole.User:
             default:
-                return "user";
+                return nameof(UserRole.User);
         }
     }
 
@@ -19,9 +19,9 @@ public static class UserRoleExtensions
         switch (val)
         {
             case UserRole.Admin:
-                return "admin";
+                return nameof(UserRole.Admin);
             case UserRole.User:
-                return "user";
+                return nameof(UserRole.User);
             default:
                 return null;
         }
@@ -31,9 +31,9 @@ public static class UserRoleExtensions
     {
         switch (val)
         {
-            case "admin":
+            case nameof(UserRole.Admin):
                 return UserRole.Admin;
-            case "user":
+            case nameof(UserRole.User):
             default:
                 return UserRole.User;
         }
@@ -43,9 +43,9 @@ public static class UserRoleExtensions
     {
         switch (val)
         {
-            case "admin":
+            case nameof(UserRole.Admin):
                 return UserRole.Admin;
-            case "user":
+            case nameof(UserRole.User):
                 return UserRole.User;
             default:
                 return null;
