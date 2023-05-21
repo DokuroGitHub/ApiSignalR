@@ -39,6 +39,6 @@ public class AuthController : ApiControllerBase
     => Ok(_currentUserService.UserId);
 
     [HttpGet("[action]")]
-    public async Task<ActionResult> GetCurrentUserAsync()
+    public async Task<ActionResult> CurrentUser()
     => Ok(await Mediator.Send(new GetCurrentUserQuery()));
 }
