@@ -30,6 +30,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Converters;
 using ZymLabs.NSwag.FluentValidation;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -92,7 +93,11 @@ public static class ConfigureServices
                 {
                     Duration = 30
                 });
-        }).AddNewtonsoftJson();//.AddXmlSerializerFormatters();
+        }).AddNewtonsoftJson(options =>
+        {
+            options.SerializerSettings.Converters.Add(new StringEnumConverter());
+        });//.AddXmlSerializerFormatters();
+
         services.AddResponseCaching();
 
         // add jwt authentication
