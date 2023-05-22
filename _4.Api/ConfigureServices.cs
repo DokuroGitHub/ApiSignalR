@@ -260,7 +260,7 @@ public static class ConfigureServices
             }
         });
         app.MapHealthChecksUI(options => options.UIPath = "/hc-ui");
-        app.UseHttpsRedirection();
+        // app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapControllers();
