@@ -8,7 +8,7 @@ public class ChatHub : Hub
     {
         MessageModel MessageModel = new MessageModel
         {
-            CreateDate = DateTime.Now,
+            CreateDate = DateTime.Now.ToLocalTime(),
             MessageText = Message,
             UserId = RandomUserId,
             UserName = UserName
@@ -20,7 +20,7 @@ public class ChatHub : Hub
     {
         MessageModel MessageModel = new MessageModel
         {
-            CreateDate = DateTime.Now,
+            CreateDate = DateTime.Now.ToLocalTime(),
             MessageText = userName + " joined chat",
             UserId = 0,
             UserName = "system"
