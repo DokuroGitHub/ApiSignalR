@@ -21,7 +21,7 @@ public class ChatHub : Hub
         MessageModel MessageModel = new MessageModel
         {
             CreateDate = DateTime.Now.ToLocalTime(),
-            MessageText = userName + " joined chat",
+            MessageText = userName + " đã tham gia phòng chat",
             UserId = 0,
             UserName = "system"
         };
