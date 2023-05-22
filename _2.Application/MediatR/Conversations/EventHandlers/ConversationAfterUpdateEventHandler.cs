@@ -27,13 +27,29 @@ public partial class ConversationAfterUpdateEventHandler : INotificationHandler<
     public async Task Handle(ConversationAfterUpdateEvent notification, CancellationToken cancellationToken)
     {
         _logger.LogInformation("CleanArchitecture Domain Event: {DomainEvent}", notification.GetType().Name);
-        var conversations = await _unitOfWork.ConversationRepository.GetAllAsync<ConversationBriefDto>(cancellationToken: cancellationToken);
-        var conversationsTask = _conversationsHub.Clients
-            .Group("ConversationsChanged")
-            .SendAsync($"Conversations_Id_{notification.Item.Id}_Updated", conversations, cancellationToken);
-        var conversationTask = _conversationsHub.Clients
+
+        // /Conversations/AllConversations/ConversationsChanged
+        var allConversationsHubTask = Task.Run(async () =>
+        {
+            var items = await _unitOfWork.ConversationRepository.GetAllAsync<ConversationBriefDto>(cancellationToken: cancellationToken);
+            await _conversationsHub.Clients
+                .Group("AllConversations")
+                .SendAsync("ConversationsChanged", items, cancellationToken);
+        });
+
+        // /Conversations/Conversations/ConversationUpdated
+        var conversationsHubTask = _conversationsHub.Clients
+            .Group("Conversations")
+            .SendAsync("ConversationUpdated", notification.Item, cancellationToken);
+
+        // /Conversations/Conversation_Id_1_ConversationUpdated
+        var conversationHubTask = _conversationsHub.Clients
             .Group($"Conversation_Id_{notification.Item.Id}")
             .SendAsync("ConversationUpdated", notification.Item, cancellationToken);
-        await Task.WhenAll(conversationsTask, conversationTask);
+
+        await Task.WhenAll(
+            allConversationsHubTask,
+            conversationsHubTask,
+            conversationHubTask);
     }
 }

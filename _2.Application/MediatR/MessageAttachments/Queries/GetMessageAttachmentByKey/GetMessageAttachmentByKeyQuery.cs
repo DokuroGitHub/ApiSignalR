@@ -10,7 +10,7 @@ public record GetMessageAttachmentByKeyQuery : IRequest<MessageAttachmentBriefDt
     public int Id { get; init; }
 };
 
-public class GetMessageAttachmentByKeyQueryHandler : IRequestHandler<GetMessageAttachmentByKeyQuery, MessageAttachmentBriefDto?>
+public class GetMessageAttachmentByKeyQueryHandler : IRequestHandler<GetMessageAttachmentByKeyQuery, MessageAttachmentBriefDto>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -19,7 +19,7 @@ public class GetMessageAttachmentByKeyQueryHandler : IRequestHandler<GetMessageA
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<MessageAttachmentBriefDto?> Handle(GetMessageAttachmentByKeyQuery request, CancellationToken cancellationToken)
+    public async Task<MessageAttachmentBriefDto> Handle(GetMessageAttachmentByKeyQuery request, CancellationToken cancellationToken)
     {
         var result = await _unitOfWork.MessageAttachmentRepository.FindAsync<MessageAttachmentBriefDto>(
             keyValues: request.Id,

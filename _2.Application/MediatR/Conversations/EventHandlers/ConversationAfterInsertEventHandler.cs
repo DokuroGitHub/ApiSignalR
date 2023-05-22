@@ -27,13 +27,23 @@ public class ConversationAfterInsertEventHandler : INotificationHandler<Conversa
     public async Task Handle(ConversationAfterInsertEvent notification, CancellationToken cancellationToken)
     {
         _logger.LogInformation("CleanArchitecture Domain Event: {DomainEvent}", notification.GetType().Name);
-        var conversations = await _unitOfWork.ConversationRepository.GetAllAsync<ConversationBriefDto>(cancellationToken: cancellationToken);
-        var conversationsTask = _conversationsHub.Clients
-            .Group("ConversationsChanged")
-            .SendAsync($"Conversations_Id_{notification.Item.Id}_Inserted", conversations, cancellationToken);
-        var conversationTask = _conversationsHub.Clients
-            .Group($"Conversation_Id_{notification.Item.Id}")
+
+        // /Conversations/AllConversations/ConversationsChanged
+        var allConversationsHubTask = Task.Run(async () =>
+        {
+            var items = await _unitOfWork.ConversationRepository.GetAllAsync<ConversationBriefDto>(cancellationToken: cancellationToken);
+            await _conversationsHub.Clients
+                .Group("AllConversations")
+                .SendAsync("ConversationsChanged", items, cancellationToken);
+        });
+
+        // /Conversations/Conversations/ConversationInserted
+        var conversationsHubTask = _conversationsHub.Clients
+            .Group("Conversations")
             .SendAsync("ConversationInserted", notification.Item, cancellationToken);
-        await Task.WhenAll(conversationsTask, conversationTask);
+
+        await Task.WhenAll(
+            allConversationsHubTask,
+            conversationsHubTask);
     }
 }
