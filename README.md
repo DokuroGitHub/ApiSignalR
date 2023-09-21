@@ -15,7 +15,7 @@ dotnet watch
 
 ## test postman
 
-connect: <wss://dokurosignalr.azurewebsites.net/users>
+connect: <wss://dokuroapisignalr.azurewebsites.net/users>
 send message:
 
 ```json
