@@ -135,21 +135,21 @@ public static class ConfigureServices
             .AddCheck<MyHealthyHealthCheck>(
                 name: nameof(MyHealthyHealthCheck),
                 tags: new[] { "healthy-for-sure" })
-            .AddCheck<AuthThirdPartyHealthCheck>(
-                name: nameof(AuthThirdPartyHealthCheck),
-                tags: new[] { "third-party", "login", "register" })
-            .AddCheck(
-                name: nameof(SqlConnectionHealthCheck),
-                instance: new SqlConnectionHealthCheck(appsettings.ConnectionStrings.DefaultConnection),
-                tags: new string[] { "dokurodb", "sql" })
-            .AddSqlServer(
-                connectionString: appsettings.ConnectionStrings.DefaultConnection,
-                name: "CK_DefaultConnection",
-                tags: new[] { "DefaultConnection" })
+            // .AddCheck<AuthThirdPartyHealthCheck>(
+            //     name: nameof(AuthThirdPartyHealthCheck),
+            //     tags: new[] { "third-party", "login", "register" })
+            // .AddCheck(
+            //     name: nameof(SqlConnectionHealthCheck),
+            //     instance: new SqlConnectionHealthCheck(appsettings.ConnectionStrings.DefaultConnection),
+            //     tags: new string[] { "dokurodb", "sql" })
+            // .AddSqlServer(
+            //     connectionString: appsettings.ConnectionStrings.DefaultConnection,
+            //     name: "CK_DefaultConnection",
+            //     tags: new[] { "DefaultConnection" })
             .AddCheck<ApiHealthCheck>(
                 name: nameof(ApiHealthCheck),
                 tags: new string[] { "api", "http" })
-            .AddDbContextCheck<ApplicationDbContext>(tags: new[] { "CK_ApplicationDbContext" })
+            // .AddDbContextCheck<ApplicationDbContext>(tags: new[] { "CK_ApplicationDbContext" })
             .AddDiskStorageHealthCheck(s => s.AddDrive("C:\\", 1024), tags: new[] { "C_Drive" })
             .AddProcessAllocatedMemoryHealthCheck(512, tags: new[] { "CK_ProcessAllocatedMemory" })
             .AddProcessHealthCheck("_4.Api", p => p.Length > 0, tags: new[] { "_4.Api" })
