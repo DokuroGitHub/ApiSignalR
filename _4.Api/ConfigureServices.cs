@@ -154,7 +154,7 @@ public static class ConfigureServices
             .AddProcessAllocatedMemoryHealthCheck(512, tags: new[] { "CK_ProcessAllocatedMemory" })
             .AddProcessHealthCheck("_4.Api", p => p.Length > 0, tags: new[] { "_4.Api" })
             .AddVirtualMemorySizeHealthCheck(long.MaxValue, tags: new[] { "VirtualMemorySize" })
-            .AddWindowsServiceHealthCheck("Power", s => s.Status == ServiceControllerStatus.Running, tags: new[] { "Power" })
+            // .AddWindowsServiceHealthCheck("Power", s => s.Status == ServiceControllerStatus.Running, tags: new[] { "Power" })
             .AddUrlGroup(new Uri("https://9gag.com"), tags: new[] { "9gag" })
             .AddSignalRHub(appsettings.SignalR.HubUrl, tags: new[] { "SignalRHub" })
             .AddPingHealthCheck(s => s.AddHost("9gag.com", 9), tags: new[] { "ping-9gag" })
